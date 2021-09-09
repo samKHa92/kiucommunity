@@ -13,6 +13,10 @@ class UserSerializer(serializers.ModelSerializer):
             'lastname',
 			'password',
 			'mobile',
+			"badge_id",
+			"room",
+			"gang",
+			"profile_picture"
 		]
 
 		# setting password kwargs

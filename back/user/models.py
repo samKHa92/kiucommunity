@@ -1,8 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.core.exceptions import ValidationError
 
 class UserManager(BaseUserManager):
-	def create_user(self, email, username, mobile, name, password=None):
+	def create_user(self, email, username, mobile, name, lastname, badge_id, room, profile_picture, password=None):
 		if not email:
 			raise ValueError('User must have email address!')
 		if not username:
@@ -17,18 +18,23 @@ class UserManager(BaseUserManager):
 			username=username,
 			mobile=mobile,
 			name=name,
+			lastname=lastname,
+			badge_id=badge_id,
+			room=room,
+			profile_picture=profile_picture
 		)
 
 		user.set_password(password)
 		user.save(using=self._db)
 		return user 
 
-	def create_superuser(self, email, username, password, mobile, name):
+	def create_superuser(self, email, username, password, mobile, name, lastname):
 		user = self.create_user(
 			email = self.normalize_email(email),
 			username=username,
 			mobile=mobile,
 			name=name,
+			lastname=lastname,
 			password=password,
 		)
 		user.mobile = mobile
@@ -49,17 +55,20 @@ class User(AbstractBaseUser):
 	is_active = models.BooleanField(default=True)
 	is_staff = models.BooleanField(default=False)
 	is_superuser = models.BooleanField(default=False)
-
+	badge_id = models.CharField(default="000", max_length=10)
+	room = models.CharField(default="E302", max_length=5)
 	# additional fields
-	profile_picture = models.ImageField(upload_to="pictures/profile_pictures", default = "agrogator/pictures/profile_pictures/default.jpeg")
+	profile_picture = models.ImageField(upload_to="profileimgs", default = "media/defaultprof.png")
 	name = models.CharField(max_length=50, default = "Name")
+	lastname = models.CharField(max_length=50, default = "LName")
 	mobile = models.CharField(max_length = 9, default = "111111111")
+	gang = models.CharField(max_length=50,default="None")
 
 	# changing default login field from username to email
 	USERNAME_FIELD = 'username'
 
 	# required fields for registration
-	REQUIRED_FIELDS = ['email','mobile','name']
+	REQUIRED_FIELDS = ['email','mobile','name', 'lastname']
 
 	# setting the manager class
 	objects = UserManager()
