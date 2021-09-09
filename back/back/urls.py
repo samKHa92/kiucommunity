@@ -11,7 +11,8 @@ import comment.urls as c
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include(u)),
+    path('users/', include(u)),
     path('posts/', include(p)),
     path('comments/', include(c)),
+    path('auth/', obtain_auth_token),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

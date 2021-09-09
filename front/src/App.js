@@ -1,20 +1,21 @@
-import logo from "./images/logocircle.svg";
+import Home from "./pages/home/Home";
+import Login from "./pages/login/Login";
+import Profile from "./pages/profile/Profile";
+import Register from "./pages/register/Register";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <a
-          className="App-link"
-          href="https://kiu.edu.ge"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        <Switch>
+          <Route path="/" exact component={Home} />
+          <Route path="/register" exact component={Register} />
+          <Route path="/login" exact component={Login} />
+          <Route path="/profile/:username" exact component={Profile} />
+        </Switch>
+      </Router>
     </div>
   );
 }

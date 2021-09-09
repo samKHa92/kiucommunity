@@ -9,10 +9,11 @@ class PostSerializer(serializers.ModelSerializer):
         fields = [
             'id',
             'user_id',
-             'title' ,
-             'likes', 
+             'date_posted' ,
+             'reacts', 
              "description",
              "gang",
+             "date_posted",
              "image1", 
              "image2",
              "image3",

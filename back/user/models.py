@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.core.exceptions import ValidationError
 
 class UserManager(BaseUserManager):
-	def create_user(self, email, username, mobile, name, lastname, badge_id, room, profile_picture, status, password=None):
+	def create_user(self, email, username, mobile, name, lastname, badge_id, room, program, course, gang, profile_picture, status, password=None):
 		if not email:
 			raise ValueError('User must have email address!')
 		if not username:
@@ -21,8 +21,11 @@ class UserManager(BaseUserManager):
 			lastname=lastname,
 			badge_id=badge_id,
 			room=room,
-			profile_picture=profile_picture,
-			status=status
+			program=program,
+			course=course,
+			status=status,
+			gang=gang,
+			profile_picture=profile_picture
 		)
 
 		user.set_password(password)
@@ -65,6 +68,11 @@ class User(AbstractBaseUser):
 	lastname = models.CharField(max_length=50, default = "LName")
 	mobile = models.CharField(max_length = 9, default = "111111111")
 	gang = models.CharField(max_length=50,default="None")
+	program = models.CharField(max_length=50,default="Computer Science")
+	course = models.IntegerField(default=1)
+	notfication_quantity = models.BigIntegerField(default=0)
+	message_quantity = models.BigIntegerField(default=0)
+
 
 	# changing default login field from username to email
 	USERNAME_FIELD = 'username'

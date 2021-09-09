@@ -17,7 +17,11 @@ class UserSerializer(serializers.ModelSerializer):
 			"room",
 			"gang",
 			"profile_picture",
-			"status"
+			"status",
+			"program",
+			"course",
+			"notfication_quantity",
+			"message_quantity"
 		]
 
 		# setting password kwargs
