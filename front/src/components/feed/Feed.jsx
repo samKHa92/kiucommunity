@@ -5,7 +5,6 @@ import { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import APIService from "../../APIService";
 import { useHistory } from "react-router-dom";
-import { Posts } from "../../dummyData";
 
 export default function Feed() {
   const [parsedData, setParsedData] = useState(false);
