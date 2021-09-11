@@ -1,10 +1,11 @@
 import "./register.css";
 import { ComboBox } from "@progress/kendo-react-dropdowns";
-import { useState, React } from "react";
+import { useState, React, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import APIService from "../../APIService";
 import tick from "../../images/tick.png";
 import { PermMedia } from "@material-ui/icons";
+import { useCookies } from "react-cookie";
 
 export default function Register() {
   const [username, setUsername] = useState("");
@@ -16,7 +17,7 @@ export default function Register() {
   const [room, setRoom] = useState("");
   const [badge_id, setBadge] = useState("");
   const [course, setYear] = useState("");
-  const [program, setProgram] = useState("");
+  const [program, setProgram] = useState("None");
   const [status, setStatus] = useState("");
   const [profile_picture, setProfilePic] = useState("undefined");
 
@@ -24,8 +25,16 @@ export default function Register() {
   const [checkedMT, setCheckedMT] = useState(false);
   const [checkedMA, setCheckedMA] = useState(false);
 
-  const [checkedStudent, setCheckedStudent] = useState(false);
+  const [checkedStudent, setCheckedStudent] = useState(true);
   const [checkedStaff, setCheckedStaff] = useState(false);
+
+  const [token, setToken, removeToken] = useCookies(
+    ["mytoken"],
+    ["usernametoken"],
+    ["nametoken"],
+    ["profilepictoken"]
+  );
+  let history = useHistory();
 
   const handleChangeCS = () => {
     setProgram("Computer Science");
@@ -57,9 +66,11 @@ export default function Register() {
   const handleChangeStaff = () => {
     setCheckedStudent(false);
     setCheckedStaff(!checkedStaff);
+    setYear("0");
+    if (checkedStaff) {
+      setStatus("");
+    }
   };
-
-  let history = useHistory();
 
   function LoginBtnClicked() {
     history.push("/login");
@@ -77,6 +88,9 @@ export default function Register() {
     let gang = "None";
     let notfication_quantity = 0;
     let message_quantity = 0;
+    if (checkedStaff) {
+      setProgram("None");
+    }
     data.append("gang", gang);
     data.append("notfication_quantity", notfication_quantity);
     data.append("message_quantity", message_quantity);
@@ -97,7 +111,12 @@ export default function Register() {
       method: "POST",
       body: data,
     })
-      .then((res) => console.log(res))
+      .then((res) => {
+        console.log(res);
+        if (res.status === 201 || res.status === 200) {
+          history.push("/login");
+        }
+      })
       .catch((error) => console.log(error));
   }
 
@@ -156,6 +175,9 @@ export default function Register() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+            <label>
+              Type "None" in Room textbox, if you do not live in KIU dorms.
+            </label>
             <div className="resgisterSmallInputs">
               <input
                 placeholder="Badge ID (Example: 0099)"
@@ -170,6 +192,7 @@ export default function Register() {
                 onChange={(e) => setRoom(e.target.value)}
               />
               <input
+                hidden={checkedStaff}
                 placeholder="Academic Year (Example: 4)"
                 className="registerSmallInput"
                 value={course}
@@ -179,7 +202,7 @@ export default function Register() {
             <br />
             <hr />
             <div className="registerBottom">
-              <div className="registerBottomLeft">
+              <div className="registerBottomLeft" hidden={checkedStaff}>
                 <label>Program: </label>
                 <br />
                 <div className="registerCheckbox">

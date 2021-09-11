@@ -20,7 +20,7 @@ export default function Login() {
   );
   let history = useHistory();
   useEffect(() => {
-    if (token["usernametoken"]) {
+    if (token["token"]) {
       // history.push(`/profile/${token["usernametoken"]}`);
       history.push("/");
     }
@@ -31,14 +31,6 @@ export default function Login() {
   }
 
   const LoginBtnClicked = () => {
-    APIService.LoginUser({ username, password })
-      .then((resp) => {
-        console.log(resp);
-        if (resp.token) {
-          setToken("mytoken", resp.token);
-        }
-      })
-      .catch((error) => console.log(error));
     APIService.GetUserData(username)
       .then((resp) => {
         console.log(resp);
@@ -49,7 +41,16 @@ export default function Login() {
           setToken("nametoken", resp.name);
         }
         if (resp.profile_picture) {
-          setToken("profilepictoken", resp.name);
+          setToken("profilepictoken", resp.profile_picture);
+        }
+      })
+      .catch((error) => console.log(error));
+    APIService.LoginUser({ username, password })
+      .then((resp) => {
+        console.log(resp);
+        if (resp.token) {
+          setToken("mytoken", resp.token);
+          history.push("/");
         }
       })
       .catch((error) => console.log(error));
