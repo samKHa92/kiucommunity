@@ -15,9 +15,5 @@ class PostSerializer(serializers.ModelSerializer):
              "gang",
              "date_posted",
              "image1", 
-             "image2",
-             "image3",
-             "image4",
-             "image5", 
                ]
 

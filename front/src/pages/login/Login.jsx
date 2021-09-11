@@ -15,15 +15,20 @@ export default function Login() {
   const [token, setToken, removeToken] = useCookies(
     ["mytoken"],
     ["usernametoken"],
-    ["nametoken"]
+    ["nametoken"],
+    ["profilepictoken"]
   );
   let history = useHistory();
   useEffect(() => {
     if (token["usernametoken"]) {
       // history.push(`/profile/${token["usernametoken"]}`);
-      history.push("/profile/" + username);
+      history.push("/");
     }
   }, [token]);
+
+  function RegisterBtnClicked() {
+    history.push("/register");
+  }
 
   const LoginBtnClicked = () => {
     APIService.LoginUser({ username, password })
@@ -42,6 +47,9 @@ export default function Login() {
         }
         if (resp.name) {
           setToken("nametoken", resp.name);
+        }
+        if (resp.profile_picture) {
+          setToken("profilepictoken", resp.name);
         }
       })
       .catch((error) => console.log(error));
@@ -77,7 +85,10 @@ export default function Login() {
               Log In
             </button>
             <span className="loginForgot">Forgot Password?</span>
-            <button className="loginRegisterButton">
+            <button
+              className="loginRegisterButton"
+              onClick={RegisterBtnClicked}
+            >
               Create a New Account
             </button>
           </div>

@@ -9,16 +9,6 @@ export default class APIService {
     }).then((resp) => resp.json());
   }
 
-  static RegisterUser(body) {
-    return fetch("http://localhost:8000/users/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    }).then((resp) => resp.json());
-  }
-
   static GetUserData(username) {
     return fetch(`http://localhost:8000/users/${username}/`, {
       method: "GET",

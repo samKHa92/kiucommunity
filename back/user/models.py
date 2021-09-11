@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.core.exceptions import ValidationError
 
 class UserManager(BaseUserManager):
-	def create_user(self, email, username, mobile, name, lastname, badge_id, room, program, course, gang, profile_picture, status, password=None):
+	def create_user(self, email, username, mobile, name, lastname, badge_id, room, program, course, gang, profile_picture, status, notfication_quantity, message_quantity, password=None):
 		if not email:
 			raise ValueError('User must have email address!')
 		if not username:
@@ -25,7 +25,10 @@ class UserManager(BaseUserManager):
 			course=course,
 			status=status,
 			gang=gang,
-			profile_picture=profile_picture
+			profile_picture=profile_picture,
+			notfication_quantity=notfication_quantity,
+			message_quantity=message_quantity,
+
 		)
 
 		user.set_password(password)
@@ -63,7 +66,7 @@ class User(AbstractBaseUser):
 	room = models.CharField(default="E302", max_length=5)
 	status = models.CharField(default="Student", max_length=50)
 	# additional fields
-	profile_picture = models.ImageField(upload_to="profileimgs", default = "media/defaultprof.png")
+	profile_picture = models.FileField(upload_to="profileimgs", default = "media/defaultprof.png")
 	name = models.CharField(max_length=50, default = "Name")
 	lastname = models.CharField(max_length=50, default = "LName")
 	mobile = models.CharField(max_length = 9, default = "111111111")

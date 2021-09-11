@@ -11,13 +11,18 @@ import {
   Event,
   School,
 } from "@material-ui/icons";
-import CloseFriend from "../closeFriend/CloseFriend";
+import { useHistory } from "react-router-dom";
 
 export default function Sidebar() {
+  let history = useHistory();
+
+  function routeHome() {
+    history.push("/");
+  }
   return (
     <div className="sidebar">
       <div className="sidebarWrapper">
-        <img className="sidebarAd" src={logo} alt="" />
+        <img className="sidebarAd" src={logo} onClick={routeHome} alt="" />
         <hr />
         <br />
         <ul className="sidebarList">

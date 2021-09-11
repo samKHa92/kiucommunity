@@ -4,6 +4,8 @@ import { useHistory } from "react-router-dom";
 import { Search, Person, Chat, Notifications } from "@material-ui/icons";
 import { useCookies } from "react-cookie";
 import APIService from "../../APIService";
+import Popup from "reactjs-popup";
+import loimg from "../../images/logout.png";
 
 export default function Topbar() {
   const [isAuth, setIsAuth] = useState(false);
@@ -27,6 +29,22 @@ export default function Topbar() {
 
   function SignInBtnClicked() {
     history.push("/login");
+  }
+
+  function routeHome() {
+    history.push("/");
+  }
+
+  function routeToProfile() {
+    history.push("/profile/" + username);
+  }
+
+  function logoutBtnClicked() {
+    removeToken(["mytoken"]);
+    removeToken(["usernametoken"]);
+    removeToken(["nametoken"]);
+    removeToken("profilepictoken");
+    history.go(0);
   }
 
   useEffect(() => {
@@ -70,7 +88,9 @@ export default function Topbar() {
   return (
     <div className="topbarContainer">
       <div className="topbarLeft">
-        <span className="logo">KIU Community</span>
+        <span className="logo" onClick={routeHome}>
+          KIU Community
+        </span>
       </div>
       {/* <div className="topbarRight3">
         <div className="topbarLinks">
@@ -104,7 +124,7 @@ export default function Topbar() {
         </div>
       </div>
       <div className="topbarRight2">
-        <p>{token["usernametoken"]}</p>
+        <p onClick={routeToProfile}>{token["usernametoken"]}</p>
         <button
           hidden={isAuth}
           className="btn-login"
@@ -112,12 +132,22 @@ export default function Topbar() {
         >
           {buttonText}
         </button>
-        <img
-          hidden={!isAuth}
-          src={profilePicture}
-          alt=""
-          className="topbarImg"
-        />
+        <div className="topbarRight4">
+          <img
+            hidden={!isAuth}
+            src={profilePicture}
+            alt=""
+            className="topbarImg"
+            onClick={routeToProfile}
+          />
+          <img
+            hidden={!isAuth}
+            src={loimg}
+            alt=""
+            className="topbarImg"
+            onClick={logoutBtnClicked}
+          />
+        </div>
       </div>
     </div>
   );

@@ -7,10 +7,6 @@ class Post(models.Model):
     gang = models.CharField(default="None", max_length=50)
     date_posted = models.CharField(default = "00.00.0000 | 00:00", max_length=30)
     image1 = models.ImageField(upload_to="postimgs", default = "media/defaultprof.png")
-    image2 = models.ImageField(upload_to="postimgs", default = "media/defaultprof.png")
-    image3 = models.ImageField(upload_to="postimgs", default = "media/defaultprof.png")
-    image4 = models.ImageField(upload_to="postimgs", default = "media/defaultprof.png")
-    image5 = models.ImageField(upload_to="postimgs", default = "media/defaultprof.png")
 
     def __str__(self):
         return self.user_id

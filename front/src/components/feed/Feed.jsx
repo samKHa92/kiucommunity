@@ -20,7 +20,8 @@ export default function Feed() {
   const [token, setToken, removeToken] = useCookies(
     ["mytoken"],
     ["usernametoken"],
-    ["nametoken"]
+    ["nametoken"],
+    ["profilepictoken"]
   );
   const [Posts, setPosts] = useState([]);
 
@@ -35,6 +36,8 @@ export default function Feed() {
       setIsAuth(true);
       setName(token["nametoken"]);
       setUsername(token["usernametoken"]);
+      setProfilePicture(token["profilepictoken"]);
+
       setIsAuth(true);
     }
   }, [token]);
@@ -50,7 +53,6 @@ export default function Feed() {
         }
         if (resp.username) {
           setUsername(resp.username);
-          console.log(username);
         }
         if (resp.email) {
           setEmail(resp.email);
@@ -75,7 +77,12 @@ export default function Feed() {
         return (
           <div className="feed">
             <div className="feedWrapper">
-              <Share name={name} profilepic={profilePicture} isauth={isAuth} />
+              <Share
+                username={username}
+                name={name}
+                profilepic={profilePicture}
+                isauth={isAuth}
+              />
               {resp.map((p) => (
                 <Post key={p.id} post={p} />
               ))}
@@ -89,7 +96,12 @@ export default function Feed() {
   return (
     <div className="feed">
       <div className="feedWrapper">
-        <Share name={name} profilepic={profilePicture} isauth={isAuth} />
+        <Share
+          username={token["usernametoken"]}
+          name={token["nametoken"]}
+          profilepic={profilePicture}
+          isauth={isAuth}
+        />
         {Posts.map((p) => (
           <Post key={p.id} post={p} />
         ))}
