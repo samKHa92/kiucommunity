@@ -45,6 +45,34 @@ export default class APIService {
     }).then((resp) => resp.json());
   }
 
+  static AddReaction(body) {
+    return fetch("http://localhost:8000/reacts/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    }).then((resp) => resp.json());
+  }
+
+  static GetAllReactions() {
+    return fetch("http://localhost:8000/reacts/", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((resp) => resp.json());
+  }
+
+  static DeleteReaction(id) {
+    return fetch(`http://localhost:8000/reacts/${id}/`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  }
+
   // static UpdateArticle(article_id, body, token) {
   //   return fetch(`http://http://127.0.0.1:8000/api/articles/${article_id}/`, {
   //     method: "PUT",

@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'post',
     'gang',
     'comment',
+    'reaction',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

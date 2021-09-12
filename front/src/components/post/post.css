@@ -58,7 +58,6 @@
 .postBottom {
   display: flex;
   align-items: center;
-  justify-content: space-between;
 }
 
 .postBottomLeft {
@@ -67,13 +66,80 @@
 }
 
 .likeIcon {
-  width: 24px;
-  height: 24px;
+  width: 40px;
+  height: 40px;
   margin-right: 5px;
   cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+.likeIcon:hover {
+  width: 42px;
+  height: 42px;
+  margin-right: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.likeCircle {
+  width: 55px;
+  height: 55px;
+  margin-right: 5px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.likeCircle:hover {
+  width: 50px;
+  height: 50px;
+  margin-right: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.postMidLeft {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  width: 225px;
+}
+
+.postFullBottomLeft {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  width: 225px;
+}
+
+.iconNames {
+  width: 40px;
+  font-size: 10px;
+  margin-right: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  margin-bottom: 4px;
+}
+
+/* .iconNamesBig {
+  width: 65px;
+  font-size: 14px;
+  margin-left: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  margin-bottom: 4px;
+} */
+
+.reactCount {
+  width: 40px;
+  font-size: 15px;
+  margin-right: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  margin-top: 4px;
 }
 
 .postLikeCounter {
+  align-items: flex-start;
+  text-align: left;
   font-size: 15px;
 }
 
@@ -81,4 +147,5 @@
   cursor: pointer;
   border-bottom: 1px dashed gray;
   font-size: 15px;
+  margin-left: 30vw;
 }
