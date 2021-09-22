@@ -6,6 +6,53 @@
   margin: 30px 0;
 }
 
+.deleteButton {
+  width: 100%;
+  padding: 5px 20px;
+  border-radius: 20px;
+  background: #b12b2b;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+  /* text-decoration: none; */
+  font-size: 15px;
+  text-align: center;
+  margin-right: 2px;
+}
+
+.deleteButton:hover {
+  padding: 5px 23px;
+
+  transition: all 0.1s ease-in-out;
+  background: rgb(240, 109, 109);
+  color: #000000;
+}
+
+.editButton {
+  width: 45%;
+  padding: 5px 20px;
+  border-radius: 20px;
+  background: #0b59d6;
+  /* padding: 10px 20px; */
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+  text-decoration: none;
+  font-size: 12px;
+  text-align: center;
+  margin-right: 2px;
+}
+
+.editButton:hover {
+  padding: 8px 23px;
+
+  transition: all 0.1s ease-in-out;
+  background: rgb(38, 183, 250);
+  color: #000000;
+}
+
 .postWrapper {
   padding: 10px;
 }

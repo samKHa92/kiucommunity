@@ -73,6 +73,15 @@ export default class APIService {
     });
   }
 
+  static DeletePost(id) {
+    return fetch(`http://localhost:8000/posts/${id}/`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  }
+
   // static UpdateArticle(article_id, body, token) {
   //   return fetch(`http://http://127.0.0.1:8000/api/articles/${article_id}/`, {
   //     method: "PUT",

@@ -57,6 +57,12 @@ input[type="file"] {
   justify-content: space-between;
 }
 
+.shareBottomMid {
+  flex: 5;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .shareOptions {
   display: flex;
   margin-left: 20px;
@@ -67,6 +73,12 @@ input[type="file"] {
   align-items: center;
   margin-right: 15px;
   cursor: pointer;
+}
+
+.shareCheckbox {
+  display: inline-block;
+
+  margin-right: 20px;
 }
 
 .shareIcon {

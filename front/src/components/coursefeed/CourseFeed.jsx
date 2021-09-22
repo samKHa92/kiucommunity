@@ -1,12 +1,13 @@
 import Post from "../post/Post";
 import Share from "../share/Share";
-import "./feed.css";
+import "./coursefeed.css";
 import { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import APIService from "../../APIService";
 import { useHistory } from "react-router-dom";
+import { setRef } from "@material-ui/core";
 
-export default function Feed() {
+export default function CourseFeed(props) {
   const [parsedData, setParsedData] = useState(false);
   const [isAuth, setIsAuth] = useState(false);
   const [username, setUsername] = useState("");
@@ -24,8 +25,16 @@ export default function Feed() {
     ["profilepictoken"]
   );
   const [Posts, setPosts] = useState([]);
+  const [answer, setAns] = useState(false);
+
+  // const [refreshed, setRefreshed] = useState(false);
 
   let history = useHistory();
+
+  // if (!refreshed) {
+  //   setRefreshed(true);
+  //   history.go(0);
+  // }
 
   function SignInBtnClicked() {
     history.push("/login");
@@ -66,17 +75,30 @@ export default function Feed() {
       })
       .catch((error) => console.log(error));
 
+    function checkPost(post, ind) {
+      APIService.GetUserData(post.user_id)
+        .then((resp) => {
+          // console.log(resp.program);
+          // console.log(ind);
+          if (resp.program === ind) {
+            console.log("123");
+            setAns(true);
+          }
+        })
+        .catch((error) => console.log(error));
+      console.log(answer);
+      return answer;
+    }
+
     APIService.GetAllPosts()
       .then((resp) => {
-        console.log(resp);
         resp = resp.filter(function (element) {
-          return element.gang === "None";
+          return element.gang === props.indicator;
         });
         resp.sort(function (a, b) {
           return parseInt(b.id) - parseInt(a.id);
         });
         setPosts(resp);
-        console.log(resp);
         return (
           <div className="feed">
             <div className="feedWrapper">

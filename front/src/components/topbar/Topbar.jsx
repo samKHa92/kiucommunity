@@ -108,11 +108,7 @@ export default function Topbar() {
         </div>
       </div>
       <div className="topbarRight">
-        <div className="topbarIcons">
-          {/* <div className="topbarIconItem">
-            <Person />
-            <span className="topbarIconBadge">1</span>
-          </div> */}
+        {/* <div className="topbarIcons">
           <div className="topbarIconItem">
             <Notifications />
             <span className="topbarIconBadge">{notfications}</span>
@@ -121,7 +117,7 @@ export default function Topbar() {
             <Chat />
             <span className="topbarIconBadge">{messages}</span>
           </div>
-        </div>
+        </div> */}
       </div>
       <div className="topbarRight2">
         <p onClick={routeToProfile}>{token["usernametoken"]}</p>

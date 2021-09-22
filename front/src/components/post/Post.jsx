@@ -14,6 +14,10 @@ import loved from "../../reacts/loved.png";
 import applaused from "../../reacts/applaused.png";
 import hahad from "../../reacts/hahad.png";
 import congrated from "../../reacts/congrated.png";
+import { BsFillTrashFill } from "react-icons/bs";
+import { AiFillEdit } from "react-icons/ai";
+import { AiOutlineDown } from "react-icons/ai";
+import { FcCollapse } from "react-icons/fc";
 
 export default function Post({ post }) {
   const [parsedData, setParsedData] = useState(false);
@@ -32,6 +36,9 @@ export default function Post({ post }) {
     ["usernametoken"],
     ["nametoken"]
   );
+
+  const [isMine, setIsMine] = useState(post.user_id === token["usernametoken"]);
+  const [commentsCollapsed, setCommentsCollapsed] = useState(false);
 
   let history = useHistory();
 
@@ -54,6 +61,13 @@ export default function Post({ post }) {
   const [AlreadyHahad, setAlreadyHahad] = useState(false);
   const [AlreadyApplaused, setAlreadyApplaused] = useState(false);
   const [AlreadyCongrated, setAlreadyCongrated] = useState(false);
+
+  function postDltBtnClicked() {
+    APIService.DeletePost(post.id)
+      .then((resp) => resp)
+      .catch((error) => console.log(error));
+    history.go(0);
+  }
 
   function likeHandler() {
     if (
@@ -581,7 +595,19 @@ export default function Post({ post }) {
             <span className="postDate">{post.date_posted}</span>
           </div>
           <div className="postTopRight">
-            <MoreVert />
+            {/* <button
+              className="editButton"
+              hidden={!post.user_id === token["usernametoken"]}
+            >
+              <AiFillEdit />
+            </button> */}
+            <button
+              className="deleteButton"
+              hidden={!isMine}
+              onClick={postDltBtnClicked}
+            >
+              <BsFillTrashFill />
+            </button>
           </div>
         </div>
         <div className="postCenter">
@@ -700,9 +726,14 @@ export default function Post({ post }) {
           <label className="postLikeCounter">
             {likes + loves + hahas + applauses + congrats} People reacted
           </label>
-          <div className="postBottomRight">
-            <span className="postCommentText">{post.comment} comments</span>
-          </div>
+          {/* <div className="postBottomRight">
+            <span className="postCommentText" hidden={!commentsCollapsed}>
+              comments <AiOutlineDown />
+            </span>
+            <span className="postCommentText" hidden={commentsCollapsed}>
+              comments <FcCollapse />
+            </span>
+          </div> */}
         </div>
         <div className="postFullBottomLeft">
           <label className="reactCount" hidden={!isAuth}>
