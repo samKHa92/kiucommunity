@@ -104,15 +104,25 @@
   outline: none;
 }
 
+.registerImg {
+  width: 50%;
+  margin-bottom: 10%;
+}
+
 .registerButton {
   height: 50px;
-  border-radius: 10px;
+  border-radius: 15px;
   border: none;
-  background-color: #1775ee;
+  background-color: #03295c;
   color: white;
   font-size: 20px;
   font-weight: 500;
   cursor: pointer;
+}
+
+.errorText {
+  font-size: 20px;
+  color: red;
 }
 
 .registerForgot {
@@ -126,7 +136,7 @@
   height: 50px;
   border-radius: 10px;
   border: none;
-  background-color: #42b72a;
+  background-color: #167c02;
   color: white;
   font-size: 20px;
   font-weight: 500;

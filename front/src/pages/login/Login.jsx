@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import APIService from "../../APIService";
+import kiulogo from "../../images/logosquare.svg";
 
 export default function Login() {
   const [isAuth, setIsAuth] = useState(false);
@@ -60,6 +61,8 @@ export default function Login() {
     <div className="login">
       <div className="loginWrapper">
         <div className="loginLeft">
+          <img className="registerImg" src={kiulogo} />
+
           <h3 className="loginLogo">KIU Community</h3>
           <span className="loginDesc">
             Connect with friends and on KIU Community.
@@ -85,13 +88,13 @@ export default function Login() {
             <button className="loginButton" onClick={LoginBtnClicked}>
               Log In
             </button>
-            <span className="loginForgot">Forgot Password?</span>
             <button
               className="loginRegisterButton"
               onClick={RegisterBtnClicked}
             >
               Create a New Account
             </button>
+            <span className="loginForgot">Forgot Password?</span>
           </div>
         </div>
       </div>

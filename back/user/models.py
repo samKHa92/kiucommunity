@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.core.exceptions import ValidationError
 
 class UserManager(BaseUserManager):
-	def create_user(self, email, username, mobile, name, lastname, badge_id, room, program, course, gang, profile_picture, status, notfication_quantity, message_quantity, password=None):
+	def create_user(self, email, username, mobile, name, lastname, badge_id, room, program, course, gang, status, notfication_quantity, message_quantity, password=None, profile_picture="defaultprof.png"):
 		if not email:
 			raise ValueError('User must have email address!')
 		if not username:

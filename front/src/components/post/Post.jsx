@@ -475,36 +475,31 @@ export default function Post({ post }) {
   }, [token]);
 
   if (!parsedData) {
-    APIService.GetUserData(post.user_id)
-      .then((resp) => {
-        setParsedData(true);
-        if (resp.name) {
-          setName(resp.name);
-        }
-        if (resp.lastname) {
-          setLastName(resp.lastname);
-        }
-        if (resp.username) {
-          setUsername(resp.username);
-          console.log(username);
-        }
-        if (resp.email) {
-          setEmail(resp.email);
-        }
-        if (resp.mobile) {
-          setMobile(resp.mobile);
-        }
-        if (resp.profile_picture) {
-          setProfilePicture(resp.profile_picture);
-        }
-        if (resp.status) {
-          setStatus(resp.status);
-        }
-      })
-      .catch((error) => console.log(error));
-
     APIService.GetAllReactions()
       .then((resp) => {
+        for (var i = 0; i < resp.length; i++) {
+          if (
+            resp[i].sender === token["usernametoken"] &&
+            resp[i].post_id === post.id
+          ) {
+            if (resp[i].react_type === "like") {
+              setAlreadyLiked(true);
+            }
+            if (resp[i].react_type === "love") {
+              setAlreadyLoved(true);
+            }
+            if (resp[i].react_type === "haha") {
+              setAlreadyHahad(true);
+            }
+            if (resp[i].react_type === "applause") {
+              setAlreadyApplaused(true);
+            }
+            if (resp[i].react_type === "congrats") {
+              setAlreadyCongrated(true);
+            }
+          }
+        }
+
         var likes2 = 0;
         var loves2 = 0;
         var hahas2 = 0;
@@ -536,28 +531,33 @@ export default function Post({ post }) {
         setHahas(hahas2);
         setApplauses(applauses2);
         setCongrats(congrats2);
+      })
+      .catch((error) => console.log(error));
 
-        for (var i = 0; i < resp.length; i++) {
-          if (
-            resp[i].sender === token["usernametoken"] &&
-            resp[i].post_id === post.id
-          ) {
-            if (resp[i].react_type === "like") {
-              setAlreadyLiked(true);
-            }
-            if (resp[i].react_type === "love") {
-              setAlreadyLoved(true);
-            }
-            if (resp[i].react_type === "haha") {
-              setAlreadyHahad(true);
-            }
-            if (resp[i].react_type === "applause") {
-              setAlreadyApplaused(true);
-            }
-            if (resp[i].react_type === "congrats") {
-              setAlreadyCongrated(true);
-            }
-          }
+    APIService.GetUserData(post.user_id)
+      .then((resp) => {
+        setParsedData(true);
+        if (resp.name) {
+          setName(resp.name);
+        }
+        if (resp.lastname) {
+          setLastName(resp.lastname);
+        }
+        if (resp.username) {
+          setUsername(resp.username);
+          console.log(username);
+        }
+        if (resp.email) {
+          setEmail(resp.email);
+        }
+        if (resp.mobile) {
+          setMobile(resp.mobile);
+        }
+        if (resp.profile_picture) {
+          setProfilePicture(resp.profile_picture);
+        }
+        if (resp.status) {
+          setStatus(resp.status);
         }
       })
       .catch((error) => console.log(error));

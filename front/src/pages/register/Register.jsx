@@ -6,26 +6,35 @@ import APIService from "../../APIService";
 import tick from "../../images/tick.png";
 import { PermMedia } from "@material-ui/icons";
 import { useCookies } from "react-cookie";
+import kiulogo from "../../images/logosquare.svg";
+import defprof from "../../images/defaultprof.png";
+import zIndex from "@material-ui/core/styles/zIndex";
 
 export default function Register() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [password2, setPassword2] = useState("");
+
   const [name, setName] = useState("");
   const [lastname, setLastname] = useState("");
   const [mobile, setMobile] = useState("");
   const [email, setEmail] = useState("");
   const [room, setRoom] = useState("");
   const [badge_id, setBadge] = useState("");
-  const [course, setYear] = useState("");
+  const [course, setYear] = useState();
   const [program, setProgram] = useState("None");
   const [status, setStatus] = useState("");
+  const [role, setRole] = useState("");
+  const [error, setError] = useState("");
+  const [errorCheck, setErrorCheck] = useState(false);
+
   const [profile_picture, setProfilePic] = useState("undefined");
 
   const [checkedCS, setCheckedCS] = useState(false);
   const [checkedMT, setCheckedMT] = useState(false);
   const [checkedMA, setCheckedMA] = useState(false);
 
-  const [checkedStudent, setCheckedStudent] = useState(true);
+  const [checkedStudent, setCheckedStudent] = useState(false);
   const [checkedStaff, setCheckedStaff] = useState(false);
 
   const [token, setToken, removeToken] = useCookies(
@@ -66,10 +75,10 @@ export default function Register() {
   const handleChangeStaff = () => {
     setCheckedStudent(false);
     setCheckedStaff(!checkedStaff);
-    setYear("0");
-    if (checkedStaff) {
-      setStatus("");
-    }
+
+    // if (checkedStaff) {
+    //   setStatus("None");
+    // }
   };
 
   function LoginBtnClicked() {
@@ -84,50 +93,77 @@ export default function Register() {
   // };
 
   function RegisterBtnClicked() {
-    const data = new FormData();
-    let gang = "None";
-    let notfication_quantity = 0;
-    let message_quantity = 0;
-    if (checkedStaff) {
-      setProgram("None");
-    }
-    data.append("gang", gang);
-    data.append("notfication_quantity", notfication_quantity);
-    data.append("message_quantity", message_quantity);
-    data.append("username", username);
-    data.append("name", name);
-    data.append("lastname", lastname);
-    data.append("password", password);
-    data.append("mobile", mobile);
-    data.append("email", email);
-    data.append("badge_id", badge_id);
-    data.append("room", room);
-    data.append("course", course);
-    data.append("status", status);
-    data.append("program", program);
-    data.append("profile_picture", profile_picture, profile_picture.name);
-
-    fetch("http://localhost:8000/users/", {
-      method: "POST",
-      body: data,
-    })
-      .then((res) => {
-        console.log(res);
-        if (res.status === 201 || res.status === 200) {
-          history.push("/login");
+    if (password === password2) {
+      if (email.endsWith("@kiu.edu.ge")) {
+        const data = new FormData();
+        let gang = "None";
+        let notfication_quantity = 0;
+        let message_quantity = 0;
+        if (checkedStaff) {
+          setProgram("None");
         }
-      })
-      .catch((error) => console.log(error));
+        data.append("gang", gang);
+        data.append("notfication_quantity", notfication_quantity);
+        data.append("message_quantity", message_quantity);
+        data.append("username", username);
+        data.append("name", name);
+        data.append("lastname", lastname);
+        data.append("password", password);
+
+        data.append("mobile", mobile);
+        data.append("email", email);
+        data.append("badge_id", badge_id);
+        data.append("room", room);
+        data.append("course", course);
+        if (profile_picture !== "undefined")
+          data.append("profile_picture", profile_picture, profile_picture.name);
+        if (checkedStaff) {
+          data.append("status", role);
+        } else {
+          data.append("status", status);
+        }
+        data.append("program", program);
+        console.log(status);
+        console.log(role);
+
+        fetch("http://localhost:8000/users/", {
+          method: "POST",
+          body: data,
+        })
+          .then((res) => {
+            console.log(res);
+            if (res.status === 201 || res.status === 200) {
+              history.push("/login");
+            } else {
+              setError(
+                "Registration Failed. Maybe the email or the username is already taken. Or you are missing some fields."
+              );
+              setErrorCheck(true);
+            }
+          })
+          .catch((error) => console.log(error));
+      } else {
+        setErrorCheck(true);
+        setError("Please provide KIU Email");
+      }
+    } else {
+      setErrorCheck(true);
+      setError("Passwords do not match");
+    }
   }
 
   return (
     <div className="register">
       <div className="registerWrapper">
         <div className="registerLeft">
+          <img className="registerImg" src={kiulogo} />
           <h3 className="registerLogo">KIU Community</h3>
-          <span className="registerDesc">
+          <span className="registerDesc" hidden={errorCheck}>
             Connect with friends and on KIU Community.
           </span>
+          <h5 hidden={!errorCheck} className="errorText">
+            {error}
+          </h5>
         </div>
         <div className="registerRight">
           <div className="registerBox">
@@ -172,8 +208,8 @@ export default function Register() {
               placeholder="Password Again"
               type="password"
               className="registerInput"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={password2}
+              onChange={(e) => setPassword2(e.target.value)}
             />
             <label>
               Type "None" in Room textbox, if you do not live in KIU dorms.
@@ -257,8 +293,8 @@ export default function Register() {
                   hidden={!checkedStaff}
                   placeholder="Title (Example: Lecturer)"
                   className="registerVerySmallInput"
-                  value={status}
-                  onChange={(e) => setStatus(e.target.value)}
+                  value={role}
+                  onChange={(e) => setRole(e.target.value)}
                 />
               </div>
             </div>
