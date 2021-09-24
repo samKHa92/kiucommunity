@@ -7,10 +7,12 @@ import Register from "./pages/register/Register";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 import MFeed from "./pages/mfeed/MFeed";
+import Topbar from "./components/topbar/Topbar";
 
 function App() {
   return (
     <div className="App">
+      {/* <Topbar /> */}
       <Router>
         <Switch>
           <Route path="/" exact component={Home} />

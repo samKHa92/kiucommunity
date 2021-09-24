@@ -96,7 +96,10 @@ export default function Post({ post }) {
         .then((resp) => {
           for (var i = 0; i < resp.length; i++) {
             console.log(resp[i]);
-            if (resp[i].sender === token["usernametoken"]) {
+            if (
+              resp[i].sender === token["usernametoken"] &&
+              resp[i].post_id === post.id
+            ) {
               APIService.DeleteReaction(resp[i].id)
                 .then((resp) => {})
                 .catch((error) => console.log(error));
@@ -112,7 +115,10 @@ export default function Post({ post }) {
       APIService.GetAllReactions()
         .then((resp) => {
           for (var i = 0; i < resp.length; i++) {
-            if (resp[i].sender === token["usernametoken"]) {
+            if (
+              resp[i].sender === token["usernametoken"] &&
+              resp[i].post_id === post.id
+            ) {
               APIService.DeleteReaction(resp[i].id)
                 .then((resp) => {})
                 .catch((error) => console.log(error));
@@ -178,7 +184,10 @@ export default function Post({ post }) {
       APIService.GetAllReactions()
         .then((resp) => {
           for (var i = 0; i < resp.length; i++) {
-            if (resp[i].sender === token["usernametoken"]) {
+            if (
+              resp[i].sender === token["usernametoken"] &&
+              resp[i].post_id === post.id
+            ) {
               APIService.DeleteReaction(resp[i].id)
                 .then((resp) => {})
                 .catch((error) => console.log(error));
@@ -194,7 +203,10 @@ export default function Post({ post }) {
       APIService.GetAllReactions()
         .then((resp) => {
           for (var i = 0; i < resp.length; i++) {
-            if (resp[i].sender === token["usernametoken"]) {
+            if (
+              resp[i].sender === token["usernametoken"] &&
+              resp[i].post_id === post.id
+            ) {
               APIService.DeleteReaction(resp[i].id)
                 .then((resp) => {})
                 .catch((error) => console.log(error));
@@ -260,7 +272,10 @@ export default function Post({ post }) {
       APIService.GetAllReactions()
         .then((resp) => {
           for (var i = 0; i < resp.length; i++) {
-            if (resp[i].sender === token["usernametoken"]) {
+            if (
+              resp[i].sender === token["usernametoken"] &&
+              resp[i].post_id === post.id
+            ) {
               APIService.DeleteReaction(resp[i].id)
                 .then((resp) => {})
                 .catch((error) => console.log(error));
@@ -276,7 +291,10 @@ export default function Post({ post }) {
       APIService.GetAllReactions()
         .then((resp) => {
           for (var i = 0; i < resp.length; i++) {
-            if (resp[i].sender === token["usernametoken"]) {
+            if (
+              resp[i].sender === token["usernametoken"] &&
+              resp[i].post_id === post.id
+            ) {
               APIService.DeleteReaction(resp[i].id)
                 .then((resp) => {})
                 .catch((error) => console.log(error));
@@ -342,7 +360,10 @@ export default function Post({ post }) {
       APIService.GetAllReactions()
         .then((resp) => {
           for (var i = 0; i < resp.length; i++) {
-            if (resp[i].sender === token["usernametoken"]) {
+            if (
+              resp[i].sender === token["usernametoken"] &&
+              resp[i].post_id === post.id
+            ) {
               APIService.DeleteReaction(resp[i].id)
                 .then((resp) => {})
                 .catch((error) => console.log(error));
@@ -358,7 +379,10 @@ export default function Post({ post }) {
       APIService.GetAllReactions()
         .then((resp) => {
           for (var i = 0; i < resp.length; i++) {
-            if (resp[i].sender === token["usernametoken"]) {
+            if (
+              resp[i].sender === token["usernametoken"] &&
+              resp[i].post_id === post.id
+            ) {
               APIService.DeleteReaction(resp[i].id)
                 .then((resp) => {})
                 .catch((error) => console.log(error));
@@ -424,7 +448,10 @@ export default function Post({ post }) {
       APIService.GetAllReactions()
         .then((resp) => {
           for (var i = 0; i < resp.length; i++) {
-            if (resp[i].sender === token["usernametoken"]) {
+            if (
+              resp[i].sender === token["usernametoken"] &&
+              resp[i].post_id === post.id
+            ) {
               APIService.DeleteReaction(resp[i].id)
                 .then((resp) => {})
                 .catch((error) => console.log(error));
@@ -440,7 +467,10 @@ export default function Post({ post }) {
       APIService.GetAllReactions()
         .then((resp) => {
           for (var i = 0; i < resp.length; i++) {
-            if (resp[i].sender === token["usernametoken"]) {
+            if (
+              resp[i].sender === token["usernametoken"] &&
+              resp[i].post_id === post.id
+            ) {
               APIService.DeleteReaction(resp[i].id)
                 .then((resp) => {})
                 .catch((error) => console.log(error));

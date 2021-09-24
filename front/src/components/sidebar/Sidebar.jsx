@@ -105,10 +105,7 @@ export default function Sidebar() {
             <Mood className="sidebarIcon" />
             <span className="sidebarListItemText">Memes</span>
           </li>
-          {/* <li className="sidebarListItem">
-            <Chat className="sidebarIcon" />
-            <span className="sidebarListItemText">Chats</span>
-          </li> */}
+
           <hr className="sidebarHr" />
 
           <li className="sidebarListItem">
@@ -121,6 +118,10 @@ export default function Sidebar() {
           </li>
         </ul>
         <hr className="sidebarHr" />
+        <li className="sidebarListItem">
+          <Chat className="sidebarIcon" />
+          <span className="sidebarListItemText">Chats</span>
+        </li>
         {/* <ul className="sidebarFriendList">
           {Users.map((u) => (
             <CloseFriend key={u.id} user={u} />

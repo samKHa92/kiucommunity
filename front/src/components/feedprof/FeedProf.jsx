@@ -1,13 +1,12 @@
-import Topbar from "../../components/topbar/Topbar";
-import Sidebar from "../../components/sidebar/Sidebar";
-import MemeFeed from "../../components/memefeed/MemeFeed";
-import Rightbar from "../../components/rightbar/Rightbar";
-import "../home/home.css";
+import Post from "../post/Post";
+import Share from "../share/Share";
+import "./feed.css";
 import { useState, useEffect } from "react";
-import APIService from "../../APIService";
 import { useCookies } from "react-cookie";
+import APIService from "../../APIService";
+import { useHistory } from "react-router-dom";
 
-export default function MFeed() {
+export default function FeedProf(props) {
   const [parsedData, setParsedData] = useState(false);
   const [isAuth, setIsAuth] = useState(false);
   const [username, setUsername] = useState("");
@@ -21,14 +20,24 @@ export default function MFeed() {
   const [token, setToken, removeToken] = useCookies(
     ["mytoken"],
     ["usernametoken"],
-    ["nametoken"]
+    ["nametoken"],
+    ["profilepictoken"]
   );
+  const [Posts, setPosts] = useState([]);
+
+  let history = useHistory();
+
+  function SignInBtnClicked() {
+    history.push("/login");
+  }
 
   useEffect(() => {
     if (token["mytoken"]) {
       setIsAuth(true);
       setName(token["nametoken"]);
       setUsername(token["usernametoken"]);
+      setProfilePicture(token["profilepictoken"]);
+
       setIsAuth(true);
     }
   }, [token]);
@@ -56,16 +65,44 @@ export default function MFeed() {
         }
       })
       .catch((error) => console.log(error));
+
+    APIService.GetAllPosts()
+      .then((resp) => {
+        console.log(resp);
+        resp = resp.filter(function (element) {
+          return element.gang === "None" && element.user_id === props.indicator;
+        });
+        resp.sort(function (a, b) {
+          return parseInt(b.id) - parseInt(a.id);
+        });
+        setPosts(resp);
+        console.log(resp);
+        return (
+          <div className="feed">
+            <div className="feedWrapper">
+              <Share
+                username={username}
+                name={name}
+                profilepic={profilePicture}
+                isauth={isAuth}
+              />
+              {resp.map((p) => (
+                <Post key={p.id} post={p} />
+              ))}
+            </div>
+          </div>
+        );
+      })
+      .catch((error) => console.log(error));
   }
 
   return (
-    <>
-      <Topbar />
-      <div className="homeContainer">
-        <Sidebar />
-        <MemeFeed />
-        <Rightbar />
+    <div className="feed">
+      <div className="feedWrapper">
+        {Posts.map((p) => (
+          <Post key={p.id} post={p} />
+        ))}
       </div>
-    </>
+    </div>
   );
 }

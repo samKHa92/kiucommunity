@@ -2,7 +2,7 @@ import Topbar from "../../components/topbar/Topbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import GangFeed from "../../components/gangfeed/GangFeed";
 import Rightbar from "../../components/rightbar/Rightbar";
-import "./gfeed.css";
+import "../home/home.css";
 import { useState, useEffect } from "react";
 import APIService from "../../APIService";
 import { useCookies } from "react-cookie";
@@ -18,6 +18,9 @@ export default function GFeed(props) {
   const [email, setEmail] = useState("");
   const [profilePicture, setProfilePicture] = useState("");
   const [buttonText, setButtonText] = useState("Log In");
+  const [gang, setGang] = useState("");
+  const [program, setProgram] = useState("");
+
   const [token, setToken, removeToken] = useCookies(
     ["mytoken"],
     ["usernametoken"],
@@ -54,18 +57,27 @@ export default function GFeed(props) {
         if (resp.profile_picture) {
           setProfilePicture(resp.profile_picture);
         }
+        if (resp.gang) {
+          setGang(resp.gang);
+        }
+        if (resp.program) {
+          setProgram(resp.program);
+        }
       })
       .catch((error) => console.log(error));
   }
-
-  return (
-    <>
-      <Topbar />
-      <div className="homeContainer">
-        <Sidebar />
-        <GangFeed indicator={props.match.params.indicator} />
-        <Rightbar />
-      </div>
-    </>
-  );
+  if (props.match.params.indicator === gang) {
+    return (
+      <>
+        <Topbar />
+        <div className="homeContainer">
+          <Sidebar />
+          <GangFeed indicator={props.match.params.indicator} />
+          <Rightbar />
+        </div>
+      </>
+    );
+  } else {
+    return <h1>You do not have a permission to view this page!</h1>;
+  }
 }

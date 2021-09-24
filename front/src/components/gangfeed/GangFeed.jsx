@@ -1,6 +1,6 @@
 import Post from "../post/Post";
 import Share from "../share/Share";
-import "./gangfeed.css";
+import "../post/post.css";
 import { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import APIService from "../../APIService";
