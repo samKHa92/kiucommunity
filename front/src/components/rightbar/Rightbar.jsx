@@ -1,5 +1,7 @@
 import "./rightbar.css";
-import Online from "../online/Online";
+import { useHistory } from "react-router-dom";
+import { Slide } from "react-slideshow-image";
+import "react-slideshow-image/dist/styles.css";
 
 export default function Rightbar({ profile }) {
   const HomeRightbar = () => {
@@ -10,7 +12,16 @@ export default function Rightbar({ profile }) {
       "http://localhost:8000/media/slider/" +
       String(getRndInteger(1, 12)) +
       ".jpeg";
+
+    const link1 = "http://localhost:8000/media/links/link1.png";
+    const link2 = "http://localhost:8000/media/links/link2.png";
+
     console.log(imgdir);
+    // let history = History();
+    // function goLink(x) {
+    //   if (x === 1)
+    //   history.push("https://www.kiu.edu.ge/index.php?m=205&news_id=163&lng=eng")
+    // }
     return (
       <>
         <div className="birthdayContainer">
@@ -21,88 +32,36 @@ export default function Rightbar({ profile }) {
           <h2>Get Vaccinated!</h2>
         </div>
         <img className="rightbarAd" src={imgdir} alt="" />
-        <h4 className="rightbarTitle">Activites</h4>
-        {/* <ul className="rightbarFriendList">
-          {Users.map((u) => (
-            <Online key={u.id} user={u} />
-          ))}
-        </ul> */}
+        <h4 className="rightbarTitle">Activity News</h4>
+        <a
+          href="https://www.kiu.edu.ge/index.php?m=205&news_id=163&lng=eng"
+          target="_blank"
+        >
+          <img className="rightbarLink" src={link1} alt="" />
+        </a>
+
+        <p className="activities-p">
+          2021-2022 Fall Semester at KIU Starts on September 20
+        </p>
+        <br />
+        <hr />
+        <a
+          href="https://www.kiu.edu.ge/index.php?m=205&news_id=161&lng=eng"
+          target="_blank"
+        >
+          <img className="rightbarLink" src={link2} alt="" />
+        </a>
+
+        <p className="activities-p">
+          Kutaisi International University is one most in-demand universities in
+          Georgia
+        </p>
+        <br />
+        <hr />
       </>
     );
   };
 
-  const ProfileRightbar = () => {
-    return (
-      <>
-        <h4 className="rightbarTitle">User information</h4>
-        <div className="rightbarInfo">
-          <div className="rightbarInfoItem">
-            <span className="rightbarInfoKey">City:</span>
-            <span className="rightbarInfoValue">New York</span>
-          </div>
-          <div className="rightbarInfoItem">
-            <span className="rightbarInfoKey">From:</span>
-            <span className="rightbarInfoValue">Madrid</span>
-          </div>
-          <div className="rightbarInfoItem">
-            <span className="rightbarInfoKey">Relationship:</span>
-            <span className="rightbarInfoValue">Single</span>
-          </div>
-        </div>
-        <h4 className="rightbarTitle">User friends</h4>
-        <div className="rightbarFollowings">
-          <div className="rightbarFollowing">
-            <img
-              src="assets/person/1.jpeg"
-              alt=""
-              className="rightbarFollowingImg"
-            />
-            <span className="rightbarFollowingName">John Carter</span>
-          </div>
-          <div className="rightbarFollowing">
-            <img
-              src="assets/person/2.jpeg"
-              alt=""
-              className="rightbarFollowingImg"
-            />
-            <span className="rightbarFollowingName">John Carter</span>
-          </div>
-          <div className="rightbarFollowing">
-            <img
-              src="assets/person/3.jpeg"
-              alt=""
-              className="rightbarFollowingImg"
-            />
-            <span className="rightbarFollowingName">John Carter</span>
-          </div>
-          <div className="rightbarFollowing">
-            <img
-              src="assets/person/4.jpeg"
-              alt=""
-              className="rightbarFollowingImg"
-            />
-            <span className="rightbarFollowingName">John Carter</span>
-          </div>
-          <div className="rightbarFollowing">
-            <img
-              src="assets/person/5.jpeg"
-              alt=""
-              className="rightbarFollowingImg"
-            />
-            <span className="rightbarFollowingName">John Carter</span>
-          </div>
-          <div className="rightbarFollowing">
-            <img
-              src="assets/person/6.jpeg"
-              alt=""
-              className="rightbarFollowingImg"
-            />
-            <span className="rightbarFollowingName">John Carter</span>
-          </div>
-        </div>
-      </>
-    );
-  };
   return (
     <div className="rightbar">
       <div className="rightbarWrapper">

@@ -44,7 +44,7 @@ export default function Topbar() {
     removeToken(["usernametoken"]);
     removeToken(["nametoken"]);
     removeToken("profilepictoken");
-    history.go(0);
+    history.push("/");
   }
 
   useEffect(() => {
@@ -120,7 +120,9 @@ export default function Topbar() {
         </div> */}
       </div>
       <div className="topbarRight2">
-        <p onClick={routeToProfile}>{token["usernametoken"]}</p>
+        <p className="topbarUsername" onClick={routeToProfile}>
+          {token["usernametoken"]}
+        </p>
         <button
           hidden={isAuth}
           className="btn-login"
