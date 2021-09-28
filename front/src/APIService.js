@@ -45,6 +45,15 @@ export default class APIService {
     }).then((resp) => resp.json());
   }
 
+  static GetAllComments() {
+    return fetch("http://localhost:8000/comments/", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((resp) => resp.json());
+  }
+
   static AddReaction(body) {
     return fetch("http://localhost:8000/reacts/", {
       method: "POST",
@@ -75,6 +84,15 @@ export default class APIService {
 
   static DeletePost(id) {
     return fetch(`http://localhost:8000/posts/${id}/`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  }
+
+  static DeleteComment(id) {
+    return fetch(`http://localhost:8000/comments/${id}/`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

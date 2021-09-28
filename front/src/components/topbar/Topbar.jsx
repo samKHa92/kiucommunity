@@ -44,7 +44,7 @@ export default function Topbar() {
     removeToken(["usernametoken"]);
     removeToken(["nametoken"]);
     removeToken("profilepictoken");
-    history.push("/");
+    history.go(0);
   }
 
   useEffect(() => {

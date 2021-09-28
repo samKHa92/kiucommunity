@@ -77,6 +77,6 @@ export default function CFeed(props) {
       </>
     );
   } else {
-    return <h1>You do not have a permission to view this page!</h1>;
+    return <h1>Please wait until we check your permission...</h1>;
   }
 }

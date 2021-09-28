@@ -15,9 +15,11 @@ import applaused from "../../reacts/applaused.png";
 import hahad from "../../reacts/hahad.png";
 import congrated from "../../reacts/congrated.png";
 import { BsFillTrashFill } from "react-icons/bs";
-import { AiFillEdit } from "react-icons/ai";
+import { BiCommentDetail } from "react-icons/bi";
 import { AiOutlineDown } from "react-icons/ai";
 import { FcCollapse } from "react-icons/fc";
+import Reply from "../reply/Reply";
+import Comment from "../comment/Comment";
 
 export default function Post({ post }) {
   const [parsedData, setParsedData] = useState(false);
@@ -30,12 +32,22 @@ export default function Post({ post }) {
   const [lastname, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [profilePicture, setProfilePicture] = useState("");
+  const [authProfPic, setAuthProfPic] = useState("");
+  const [authProfPicParsed, setAuthProfPicParsed] = useState(false);
+  const [commentCount, setCommentCount] = useState(0);
+
   const [buttonText, setButtonText] = useState("Log In");
   const [token, setToken, removeToken] = useCookies(
     ["mytoken"],
     ["usernametoken"],
     ["nametoken"]
   );
+
+  APIService.GetUserData(token["usernametoken"])
+    .then((resp) => {
+      setAuthProfPic(resp.profile_picture);
+    })
+    .catch((error) => console.log(error));
 
   const [isMine, setIsMine] = useState(post.user_id === token["usernametoken"]);
   const [commentsCollapsed, setCommentsCollapsed] = useState(false);
@@ -67,6 +79,10 @@ export default function Post({ post }) {
       .then((resp) => resp)
       .catch((error) => console.log(error));
     history.go(0);
+  }
+
+  function routeToPostPage() {
+    history.push("/post/" + post.id);
   }
 
   function likeHandler() {
@@ -518,7 +534,23 @@ export default function Post({ post }) {
     }
   }, [token]);
 
+  const [FComment, setFComment] = useState();
+  const [SComment, setSComment] = useState();
   if (!parsedData) {
+    APIService.GetAllComments()
+      .then((resp) => {
+        resp = resp.filter(function (element) {
+          return element.post_id === String(post.id);
+        });
+        setCommentCount(resp.length);
+        resp.sort(function (a, b) {
+          return parseInt(b.id) - parseInt(a.id);
+        });
+        setFComment(resp[0]);
+        setSComment(resp[1]);
+      })
+      .catch((error) => console.log(error));
+
     APIService.GetAllReactions()
       .then((resp) => {
         for (var i = 0; i < resp.length; i++) {
@@ -606,183 +638,560 @@ export default function Post({ post }) {
       })
       .catch((error) => console.log(error));
   }
-
-  return (
-    <div className="post">
-      <div className="postWrapper">
-        <div className="postTop">
-          <div className="postTopLeft">
-            <img
-              className="postProfileImg"
-              src={profilePicture}
-              onClick={routeToProfile}
-              alt=""
-            />
-            <span className="postUsername" onClick={routeToProfile}>
-              {username}
-            </span>
-            <span className="postStatus">({status})</span>
-            <span className="postDate">{post.date_posted}</span>
-          </div>
-          <div className="postTopRight">
-            {/* <button
+  if (FComment === undefined)
+    return (
+      <div className="post">
+        <div className="postWrapper">
+          <div className="postTop">
+            <div className="postTopLeft">
+              <img
+                className="postProfileImg"
+                src={profilePicture}
+                onClick={routeToProfile}
+                alt=""
+              />
+              <span className="postUsername" onClick={routeToProfile}>
+                {username}
+              </span>
+              <span className="postStatus">({status})</span>
+              <span className="postDate">{post.date_posted}</span>
+            </div>
+            <div className="postTopRight">
+              {/* <button
               className="editButton"
               hidden={!post.user_id === token["usernametoken"]}
             >
               <AiFillEdit />
             </button> */}
-            <button
-              className="deleteButton"
-              hidden={!isMine}
-              onClick={postDltBtnClicked}
-            >
-              <BsFillTrashFill />
-            </button>
+              <button
+                className="deleteButton"
+                hidden={!isMine}
+                onClick={postDltBtnClicked}
+              >
+                <BsFillTrashFill />
+              </button>
+            </div>
           </div>
-        </div>
-        <div className="postCenter">
-          <span className="postText">{post?.description}</span>
-          <img className="postImg" src={post.image1} alt="" />
-        </div>
-        <div className="postMidLeft">
-          <label className="iconNames" hidden={!isAuth}>
-            Like
-          </label>
-          {/* <label className="iconNamesBig" hidden={!AlreadyLiked}>
-            Like
-          </label> */}
-
-          <label className="iconNames" hidden={!isAuth}>
-            Applause
-          </label>
-          {/* <label className="iconNamesBig" hidden={!AlreadyApplaused}>
-            Applause
-          </label> */}
-
-          <label className="iconNames" hidden={!isAuth}>
-            Love
-          </label>
-          {/* <label className="iconNamesBig" hidden={!AlreadyLoved}>
-            Love
-          </label> */}
-
-          <label className="iconNames" hidden={!isAuth}>
-            Congrats
-          </label>
-          {/* <label className="iconNamesBig" hidden={!AlreadyCongrated}>
-            Congrats
-          </label> */}
-
-          <label className="iconNames" hidden={!isAuth}>
-            Haha
-          </label>
-          {/* <label className="iconNamesBig" hidden={!AlreadyHahad}>
-            Haha
-          </label> */}
-        </div>
-        <div className="postBottom">
-          <div className="postBottomLeft">
-            <img
-              className="likeIcon"
-              src={likeicon}
-              onClick={likeHandler}
-              alt=""
-              hidden={AlreadyLiked || !isAuth}
-            />
-            <img
-              className="likeCircle"
-              src={liked}
-              onClick={likeHandler}
-              alt=""
-              hidden={!AlreadyLiked || !isAuth}
-            />
-            <img
-              className="likeIcon"
-              src={applauseicon}
-              onClick={applauseHandler}
-              alt=""
-              hidden={AlreadyApplaused || !isAuth}
-            />
-            <img
-              className="likeCircle"
-              src={applaused}
-              onClick={applauseHandler}
-              alt=""
-              hidden={!AlreadyApplaused || !isAuth}
-            />
-            <img
-              className="likeIcon"
-              src={loveicon}
-              onClick={loveHandler}
-              alt=""
-              hidden={AlreadyLoved || !isAuth}
-            />
-            <img
-              className="likeCircle"
-              src={loved}
-              onClick={loveHandler}
-              alt=""
-              hidden={!AlreadyLoved || !isAuth}
-            />
-            <img
-              className="likeIcon"
-              src={congratsicon}
-              onClick={congratsHandler}
-              alt=""
-              hidden={AlreadyCongrated || !isAuth}
-            />
-            <img
-              className="likeCircle"
-              src={congrated}
-              onClick={congratsHandler}
-              alt=""
-              hidden={!AlreadyCongrated || !isAuth}
-            />
-            <img
-              className="likeIcon"
-              src={smileicon}
-              onClick={hahaHandler}
-              alt=""
-              hidden={AlreadyHahad || !isAuth}
-            />
-            <img
-              className="likeCircle"
-              src={hahad}
-              onClick={hahaHandler}
-              alt=""
-              hidden={!AlreadyHahad || !isAuth}
-            />
+          <div className="postCenter">
+            <span className="postText">{post?.description}</span>
+            <img className="postImg" src={post.image1} alt="" />
           </div>
-          <label className="postLikeCounter">
-            {likes + loves + hahas + applauses + congrats} People reacted
-          </label>
-          {/* <div className="postBottomRight">
-            <span className="postCommentText" hidden={!commentsCollapsed}>
-              comments <AiOutlineDown />
+          <div className="postMidLeft">
+            <label className="iconNames" hidden={!isAuth}>
+              Like
+            </label>
+            {/* <label className="iconNamesBig" hidden={!AlreadyLiked}>
+            Like
+          </label> */}
+
+            <label className="iconNames" hidden={!isAuth}>
+              Applause
+            </label>
+            {/* <label className="iconNamesBig" hidden={!AlreadyApplaused}>
+            Applause
+          </label> */}
+
+            <label className="iconNames" hidden={!isAuth}>
+              Love
+            </label>
+            {/* <label className="iconNamesBig" hidden={!AlreadyLoved}>
+            Love
+          </label> */}
+
+            <label className="iconNames" hidden={!isAuth}>
+              Congrats
+            </label>
+            {/* <label className="iconNamesBig" hidden={!AlreadyCongrated}>
+            Congrats
+          </label> */}
+
+            <label className="iconNames" hidden={!isAuth}>
+              Haha
+            </label>
+            {/* <label className="iconNamesBig" hidden={!AlreadyHahad}>
+            Haha
+          </label> */}
+          </div>
+          <div className="postBottom">
+            <div className="postBottomLeft">
+              <img
+                className="likeIcon"
+                src={likeicon}
+                onClick={likeHandler}
+                alt=""
+                hidden={AlreadyLiked || !isAuth}
+              />
+              <img
+                className="likeCircle"
+                src={liked}
+                onClick={likeHandler}
+                alt=""
+                hidden={!AlreadyLiked || !isAuth}
+              />
+              <img
+                className="likeIcon"
+                src={applauseicon}
+                onClick={applauseHandler}
+                alt=""
+                hidden={AlreadyApplaused || !isAuth}
+              />
+              <img
+                className="likeCircle"
+                src={applaused}
+                onClick={applauseHandler}
+                alt=""
+                hidden={!AlreadyApplaused || !isAuth}
+              />
+              <img
+                className="likeIcon"
+                src={loveicon}
+                onClick={loveHandler}
+                alt=""
+                hidden={AlreadyLoved || !isAuth}
+              />
+              <img
+                className="likeCircle"
+                src={loved}
+                onClick={loveHandler}
+                alt=""
+                hidden={!AlreadyLoved || !isAuth}
+              />
+              <img
+                className="likeIcon"
+                src={congratsicon}
+                onClick={congratsHandler}
+                alt=""
+                hidden={AlreadyCongrated || !isAuth}
+              />
+              <img
+                className="likeCircle"
+                src={congrated}
+                onClick={congratsHandler}
+                alt=""
+                hidden={!AlreadyCongrated || !isAuth}
+              />
+              <img
+                className="likeIcon"
+                src={smileicon}
+                onClick={hahaHandler}
+                alt=""
+                hidden={AlreadyHahad || !isAuth}
+              />
+              <img
+                className="likeCircle"
+                src={hahad}
+                onClick={hahaHandler}
+                alt=""
+                hidden={!AlreadyHahad || !isAuth}
+              />
+            </div>
+            <label className="postLikeCounter">
+              {likes + loves + hahas + applauses + congrats} People reacted
+            </label>
+
+            <span className="postCommentText" onClick={routeToPostPage}>
+              {/* comments: <BiCommentDetail className="postCommentText" /> */}
+              All Comments:
             </span>
-            <span className="postCommentText" hidden={commentsCollapsed}>
-              comments <FcCollapse />
-            </span>
-          </div> */}
-        </div>
-        <div className="postFullBottomLeft">
-          <label className="reactCount" hidden={!isAuth}>
-            {likes}
-          </label>
-          <label className="reactCount" hidden={!isAuth}>
-            {applauses}
-          </label>
-          <label className="reactCount" hidden={!isAuth}>
-            {loves}
-          </label>
-          <label className="reactCount" hidden={!isAuth}>
-            {congrats}
-          </label>
-          <label className="reactCount" hidden={!isAuth}>
-            {hahas}
-          </label>
+          </div>
+          <div className="postFullBottomLeft">
+            <label className="reactCount" hidden={!isAuth}>
+              {likes}
+            </label>
+            <label className="reactCount" hidden={!isAuth}>
+              {applauses}
+            </label>
+            <label className="reactCount" hidden={!isAuth}>
+              {loves}
+            </label>
+            <label className="reactCount" hidden={!isAuth}>
+              {congrats}
+            </label>
+            <label className="reactCount" hidden={!isAuth}>
+              {hahas}
+            </label>
+          </div>
+          <br />
+          <Reply
+            username={token["usernametoken"]}
+            name={token["nametoken"]}
+            profilepic={authProfPic}
+            isauth={isAuth}
+            pid={post.id}
+          />
         </div>
       </div>
-    </div>
-  );
+    );
+  else if (SComment === undefined) {
+    return (
+      <div className="post">
+        <div className="postWrapper">
+          <div className="postTop">
+            <div className="postTopLeft">
+              <img
+                className="postProfileImg"
+                src={profilePicture}
+                onClick={routeToProfile}
+                alt=""
+              />
+              <span className="postUsername" onClick={routeToProfile}>
+                {username}
+              </span>
+              <span className="postStatus">({status})</span>
+              <span className="postDate">{post.date_posted}</span>
+            </div>
+            <div className="postTopRight">
+              {/* <button
+                className="editButton"
+                hidden={!post.user_id === token["usernametoken"]}
+              >
+                <AiFillEdit />
+              </button> */}
+              <button
+                className="deleteButton"
+                hidden={!isMine}
+                onClick={postDltBtnClicked}
+              >
+                <BsFillTrashFill />
+              </button>
+            </div>
+          </div>
+          <div className="postCenter">
+            <span className="postText">{post?.description}</span>
+            <img className="postImg" src={post.image1} alt="" />
+          </div>
+          <div className="postMidLeft">
+            <label className="iconNames" hidden={!isAuth}>
+              Like
+            </label>
+            {/* <label className="iconNamesBig" hidden={!AlreadyLiked}>
+              Like
+            </label> */}
+
+            <label className="iconNames" hidden={!isAuth}>
+              Applause
+            </label>
+            {/* <label className="iconNamesBig" hidden={!AlreadyApplaused}>
+              Applause
+            </label> */}
+
+            <label className="iconNames" hidden={!isAuth}>
+              Love
+            </label>
+            {/* <label className="iconNamesBig" hidden={!AlreadyLoved}>
+              Love
+            </label> */}
+
+            <label className="iconNames" hidden={!isAuth}>
+              Congrats
+            </label>
+            {/* <label className="iconNamesBig" hidden={!AlreadyCongrated}>
+              Congrats
+            </label> */}
+
+            <label className="iconNames" hidden={!isAuth}>
+              Haha
+            </label>
+            {/* <label className="iconNamesBig" hidden={!AlreadyHahad}>
+              Haha
+            </label> */}
+          </div>
+          <div className="postBottom">
+            <div className="postBottomLeft">
+              <img
+                className="likeIcon"
+                src={likeicon}
+                onClick={likeHandler}
+                alt=""
+                hidden={AlreadyLiked || !isAuth}
+              />
+              <img
+                className="likeCircle"
+                src={liked}
+                onClick={likeHandler}
+                alt=""
+                hidden={!AlreadyLiked || !isAuth}
+              />
+              <img
+                className="likeIcon"
+                src={applauseicon}
+                onClick={applauseHandler}
+                alt=""
+                hidden={AlreadyApplaused || !isAuth}
+              />
+              <img
+                className="likeCircle"
+                src={applaused}
+                onClick={applauseHandler}
+                alt=""
+                hidden={!AlreadyApplaused || !isAuth}
+              />
+              <img
+                className="likeIcon"
+                src={loveicon}
+                onClick={loveHandler}
+                alt=""
+                hidden={AlreadyLoved || !isAuth}
+              />
+              <img
+                className="likeCircle"
+                src={loved}
+                onClick={loveHandler}
+                alt=""
+                hidden={!AlreadyLoved || !isAuth}
+              />
+              <img
+                className="likeIcon"
+                src={congratsicon}
+                onClick={congratsHandler}
+                alt=""
+                hidden={AlreadyCongrated || !isAuth}
+              />
+              <img
+                className="likeCircle"
+                src={congrated}
+                onClick={congratsHandler}
+                alt=""
+                hidden={!AlreadyCongrated || !isAuth}
+              />
+              <img
+                className="likeIcon"
+                src={smileicon}
+                onClick={hahaHandler}
+                alt=""
+                hidden={AlreadyHahad || !isAuth}
+              />
+              <img
+                className="likeCircle"
+                src={hahad}
+                onClick={hahaHandler}
+                alt=""
+                hidden={!AlreadyHahad || !isAuth}
+              />
+            </div>
+            <label className="postLikeCounter">
+              {likes + loves + hahas + applauses + congrats} People reacted
+            </label>
+
+            <span className="postCommentText" onClick={routeToPostPage}>
+              {/* comments: <BiCommentDetail className="postCommentText" /> */}
+              All Comments:
+            </span>
+          </div>
+          <div className="postFullBottomLeft">
+            <label className="reactCount" hidden={!isAuth}>
+              {likes}
+            </label>
+            <label className="reactCount" hidden={!isAuth}>
+              {applauses}
+            </label>
+            <label className="reactCount" hidden={!isAuth}>
+              {loves}
+            </label>
+            <label className="reactCount" hidden={!isAuth}>
+              {congrats}
+            </label>
+            <label className="reactCount" hidden={!isAuth}>
+              {hahas}
+            </label>
+          </div>
+          <br />
+          <Reply
+            username={token["usernametoken"]}
+            name={token["nametoken"]}
+            profilepic={authProfPic}
+            isauth={isAuth}
+            pid={post.id}
+          />
+          <Comment post={FComment} />
+        </div>
+      </div>
+    );
+  } else {
+    return (
+      <div className="post">
+        <div className="postWrapper">
+          <div className="postTop">
+            <div className="postTopLeft">
+              <img
+                className="postProfileImg"
+                src={profilePicture}
+                onClick={routeToProfile}
+                alt=""
+              />
+              <span className="postUsername" onClick={routeToProfile}>
+                {username}
+              </span>
+              <span className="postStatus">({status})</span>
+              <span className="postDate">{post.date_posted}</span>
+            </div>
+            <div className="postTopRight">
+              {/* <button
+                className="editButton"
+                hidden={!post.user_id === token["usernametoken"]}
+              >
+                <AiFillEdit />
+              </button> */}
+              <button
+                className="deleteButton"
+                hidden={!isMine}
+                onClick={postDltBtnClicked}
+              >
+                <BsFillTrashFill />
+              </button>
+            </div>
+          </div>
+          <div className="postCenter">
+            <span className="postText">{post?.description}</span>
+            <img className="postImg" src={post.image1} alt="" />
+          </div>
+          <div className="postMidLeft">
+            <label className="iconNames" hidden={!isAuth}>
+              Like
+            </label>
+            {/* <label className="iconNamesBig" hidden={!AlreadyLiked}>
+              Like
+            </label> */}
+
+            <label className="iconNames" hidden={!isAuth}>
+              Applause
+            </label>
+            {/* <label className="iconNamesBig" hidden={!AlreadyApplaused}>
+              Applause
+            </label> */}
+
+            <label className="iconNames" hidden={!isAuth}>
+              Love
+            </label>
+            {/* <label className="iconNamesBig" hidden={!AlreadyLoved}>
+              Love
+            </label> */}
+
+            <label className="iconNames" hidden={!isAuth}>
+              Congrats
+            </label>
+            {/* <label className="iconNamesBig" hidden={!AlreadyCongrated}>
+              Congrats
+            </label> */}
+
+            <label className="iconNames" hidden={!isAuth}>
+              Haha
+            </label>
+            {/* <label className="iconNamesBig" hidden={!AlreadyHahad}>
+              Haha
+            </label> */}
+          </div>
+          <div className="postBottom">
+            <div className="postBottomLeft">
+              <img
+                className="likeIcon"
+                src={likeicon}
+                onClick={likeHandler}
+                alt=""
+                hidden={AlreadyLiked || !isAuth}
+              />
+              <img
+                className="likeCircle"
+                src={liked}
+                onClick={likeHandler}
+                alt=""
+                hidden={!AlreadyLiked || !isAuth}
+              />
+              <img
+                className="likeIcon"
+                src={applauseicon}
+                onClick={applauseHandler}
+                alt=""
+                hidden={AlreadyApplaused || !isAuth}
+              />
+              <img
+                className="likeCircle"
+                src={applaused}
+                onClick={applauseHandler}
+                alt=""
+                hidden={!AlreadyApplaused || !isAuth}
+              />
+              <img
+                className="likeIcon"
+                src={loveicon}
+                onClick={loveHandler}
+                alt=""
+                hidden={AlreadyLoved || !isAuth}
+              />
+              <img
+                className="likeCircle"
+                src={loved}
+                onClick={loveHandler}
+                alt=""
+                hidden={!AlreadyLoved || !isAuth}
+              />
+              <img
+                className="likeIcon"
+                src={congratsicon}
+                onClick={congratsHandler}
+                alt=""
+                hidden={AlreadyCongrated || !isAuth}
+              />
+              <img
+                className="likeCircle"
+                src={congrated}
+                onClick={congratsHandler}
+                alt=""
+                hidden={!AlreadyCongrated || !isAuth}
+              />
+              <img
+                className="likeIcon"
+                src={smileicon}
+                onClick={hahaHandler}
+                alt=""
+                hidden={AlreadyHahad || !isAuth}
+              />
+              <img
+                className="likeCircle"
+                src={hahad}
+                onClick={hahaHandler}
+                alt=""
+                hidden={!AlreadyHahad || !isAuth}
+              />
+            </div>
+            <label className="postLikeCounter">
+              {likes + loves + hahas + applauses + congrats} People reacted
+            </label>
+
+            <span className="postCommentText" onClick={routeToPostPage}>
+              {/* comments: <BiCommentDetail className="postCommentText" /> */}
+              All Comments:
+            </span>
+          </div>
+          <div className="postFullBottomLeft">
+            <label className="reactCount" hidden={!isAuth}>
+              {likes}
+            </label>
+            <label className="reactCount" hidden={!isAuth}>
+              {applauses}
+            </label>
+            <label className="reactCount" hidden={!isAuth}>
+              {loves}
+            </label>
+            <label className="reactCount" hidden={!isAuth}>
+              {congrats}
+            </label>
+            <label className="reactCount" hidden={!isAuth}>
+              {hahas}
+            </label>
+          </div>
+          <br />
+          <Reply
+            username={token["usernametoken"]}
+            name={token["nametoken"]}
+            profilepic={authProfPic}
+            isauth={isAuth}
+            pid={post.id}
+          />
+          <Comment post={FComment} />
+          <Comment post={SComment} />
+        </div>
+      </div>
+    );
+  }
 }

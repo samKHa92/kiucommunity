@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./App.css";
 import MFeed from "./pages/mfeed/MFeed";
 import Topbar from "./components/topbar/Topbar";
+import PostPage from "./pages/postpage/PostPage";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/gangfeed/:indicator" exact component={GFeed} />
           <Route path="/coursefeed/:indicator" exact component={CFeed} />
           <Route path="/memes/" exact component={MFeed} />
+          <Route path="/post/:id" exact component={PostPage} />
         </Switch>
       </Router>
     </div>
