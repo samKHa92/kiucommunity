@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'comment',
     'reaction',
     'book',
+    'event',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
