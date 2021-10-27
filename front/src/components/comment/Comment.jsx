@@ -79,6 +79,11 @@ export default function Comment({ post }) {
         }
       })
       .catch((error) => console.log(error));
+    APIService.GetPostData(post.post_id)
+      .then((resp) => {
+        setIsMine(isMine || resp.user_id === token["usernametoken"]);
+      })
+      .catch((error) => console.log(error));
   }
   if (post.id !== 0)
     return (

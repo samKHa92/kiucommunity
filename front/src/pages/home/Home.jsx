@@ -33,29 +33,30 @@ export default function Home() {
     }
   }, [token]);
   if (!parsedData) {
-    APIService.GetUserData(token["usernametoken"])
-      .then((resp) => {
-        setParsedData(true);
-        if (resp.name) {
-          setName(resp.name);
-        }
-        if (resp.lastname) {
-          setLastName(resp.lastname);
-        }
-        if (resp.username) {
-          setUsername(resp.username);
-        }
-        if (resp.email) {
-          setEmail(resp.email);
-        }
-        if (resp.mobile) {
-          setMobile(resp.mobile);
-        }
-        if (resp.profile_picture) {
-          setProfilePicture(resp.profile_picture);
-        }
-      })
-      .catch((error) => console.log(error));
+    if (username !== "")
+      APIService.GetUserData(token["usernametoken"])
+        .then((resp) => {
+          setParsedData(true);
+          if (resp.name) {
+            setName(resp.name);
+          }
+          if (resp.lastname) {
+            setLastName(resp.lastname);
+          }
+          if (resp.username) {
+            setUsername(resp.username);
+          }
+          if (resp.email) {
+            setEmail(resp.email);
+          }
+          if (resp.mobile) {
+            setMobile(resp.mobile);
+          }
+          if (resp.profile_picture) {
+            setProfilePicture(resp.profile_picture);
+          }
+        })
+        .catch((error) => console.log(error));
   }
 
   return (

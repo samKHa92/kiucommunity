@@ -543,10 +543,12 @@ export default function PPost(props) {
   if (!parsedData) {
     APIService.GetAllReactions()
       .then((resp) => {
+        console.log(resp);
         for (var i = 0; i < resp.length; i++) {
+          console.log(resp[i]);
           if (
             resp[i].sender === token["usernametoken"] &&
-            resp[i].post_id === props.id
+            resp[i].post_id === parseInt(props.id)
           ) {
             if (resp[i].react_type === "like") {
               setAlreadyLiked(true);
@@ -572,8 +574,13 @@ export default function PPost(props) {
         var applauses2 = 0;
         var congrats2 = 0;
 
+        console.log(resp);
+
         for (var i = 0; i < resp.length; i++) {
-          if (resp[i].post_id === props.id) {
+          console.log(resp[i].post_id);
+          console.log(props.id);
+          if (resp[i].post_id === parseInt(props.id)) {
+            console.log(resp[i].react_type);
             if (resp[i].react_type === "like") {
               likes2++;
             }
@@ -597,6 +604,9 @@ export default function PPost(props) {
         setHahas(hahas2);
         setApplauses(applauses2);
         setCongrats(congrats2);
+        console.log(hahas2);
+        console.log(hahas);
+        console.log(props.id);
       })
       .catch((error) => console.log(error));
 

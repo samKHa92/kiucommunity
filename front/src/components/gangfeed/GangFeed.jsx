@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import APIService from "../../APIService";
 import { useHistory } from "react-router-dom";
-import { setRef } from "@material-ui/core";
+// import { setRef } from "@material-ui/core";
 
 export default function GangFeed(props) {
   const [parsedData, setParsedData] = useState(false);
