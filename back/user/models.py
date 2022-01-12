@@ -88,6 +88,7 @@ class User(AbstractBaseUser):
 
 	# back representation of object on call
 	def __str__(self):
+		
 		return self.username
 
 	# django required methods
