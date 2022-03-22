@@ -14,7 +14,7 @@ import {
   MenuBook,
   Star,
 } from "@material-ui/icons";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import APIService from "../../APIService";
 import { useCookies } from "react-cookie";
@@ -57,7 +57,7 @@ export default function Sidebar() {
     console.log(haveCourse);
     console.log(haveGang);
   }
-  let history = useHistory();
+  let history = useNavigate();
 
   function routeHome() {
     history.push("/");

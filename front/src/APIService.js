@@ -1,6 +1,6 @@
 export default class APIService {
   static LoginUser(body) {
-    return fetch("http://localhost:8000/auth/", {
+    return fetch("http://localhost/auth/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -10,7 +10,7 @@ export default class APIService {
   }
 
   static GetUserData(username) {
-    return fetch(`http://localhost:8000/users/${username}/`, {
+    return fetch(`http://localhost/users/${username}/`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -19,7 +19,7 @@ export default class APIService {
   }
 
   static GetPostData(id) {
-    return fetch(`http://localhost:8000/posts/${id}/`, {
+    return fetch(`http://localhost/posts/${id}/`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -28,7 +28,7 @@ export default class APIService {
   }
 
   static GetAllUsers() {
-    return fetch("http://localhost:8000/users/", {
+    return fetch("http://localhost/users/", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -37,7 +37,7 @@ export default class APIService {
   }
 
   static GetAllPosts() {
-    return fetch("http://localhost:8000/posts/", {
+    return fetch("http://localhost/posts/", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -46,7 +46,7 @@ export default class APIService {
   }
 
   static GetAllComments() {
-    return fetch("http://localhost:8000/comments/", {
+    return fetch("http://localhost/comments/", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -55,7 +55,7 @@ export default class APIService {
   }
 
   static AddReaction(body) {
-    return fetch("http://localhost:8000/reacts/", {
+    return fetch("http://localhost/reacts/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -65,7 +65,7 @@ export default class APIService {
   }
 
   static GetAllReactions() {
-    return fetch("http://localhost:8000/reacts/", {
+    return fetch("http://localhost/reacts/", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -74,7 +74,7 @@ export default class APIService {
   }
 
   static DeleteReaction(id) {
-    return fetch(`http://localhost:8000/reacts/${id}/`, {
+    return fetch(`http://localhost/reacts/${id}/`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -83,7 +83,7 @@ export default class APIService {
   }
 
   static DeletePost(id) {
-    return fetch(`http://localhost:8000/posts/${id}/`, {
+    return fetch(`http://localhost/posts/${id}/`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -92,7 +92,7 @@ export default class APIService {
   }
 
   static DeleteComment(id) {
-    return fetch(`http://localhost:8000/comments/${id}/`, {
+    return fetch(`http://localhost/comments/${id}/`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

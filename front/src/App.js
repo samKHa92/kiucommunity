@@ -4,7 +4,7 @@ import GFeed from "./pages/gfeed/GFeed";
 import Login from "./pages/login/Login";
 import Profile from "./pages/profile/Profile";
 import Register from "./pages/register/Register";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
 import MFeed from "./pages/mfeed/MFeed";
 import Topbar from "./components/topbar/Topbar";
@@ -15,7 +15,7 @@ function App() {
     <div className="App">
       {/* <Topbar /> */}
       <Router>
-        <Switch>
+        <Routes>
           <Route path="/" exact component={Home} />
           <Route path="/register" exact component={Register} />
           <Route path="/login" exact component={Login} />
@@ -24,7 +24,7 @@ function App() {
           <Route path="/coursefeed/:indicator" exact component={CFeed} />
           <Route path="/memes/" exact component={MFeed} />
           <Route path="/post/:id" exact component={PostPage} />
-        </Switch>
+        </Routes>
       </Router>
     </div>
   );

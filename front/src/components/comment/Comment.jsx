@@ -2,7 +2,7 @@ import "./comment.css";
 import { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import APIService from "../../APIService";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { BsFillTrashFill } from "react-icons/bs";
 
 export default function Comment({ post }) {
@@ -26,7 +26,7 @@ export default function Comment({ post }) {
   const [isMine, setIsMine] = useState(post.user_id === token["usernametoken"]);
   const [commentsCollapsed, setCommentsCollapsed] = useState(false);
 
-  let history = useHistory();
+  let history = useNavigate();
 
   function SignInBtnClicked() {
     history.push("/login");

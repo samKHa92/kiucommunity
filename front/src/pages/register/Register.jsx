@@ -1,7 +1,7 @@
 import "./register.css";
 import { ComboBox } from "@progress/kendo-react-dropdowns";
 import { useState, React, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import APIService from "../../APIService";
 import tick from "../../images/tick.png";
 import { PermMedia } from "@material-ui/icons";
@@ -43,7 +43,7 @@ export default function Register() {
     ["nametoken"],
     ["profilepictoken"]
   );
-  let history = useHistory();
+  let history = useNavigate();
 
   const handleChangeCS = () => {
     setProgram("Computer Science");

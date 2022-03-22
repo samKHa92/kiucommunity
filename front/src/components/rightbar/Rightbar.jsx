@@ -1,5 +1,5 @@
 import "./rightbar.css";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Slide } from "react-slideshow-image";
 import "react-slideshow-image/dist/styles.css";
 

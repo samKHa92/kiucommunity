@@ -1,6 +1,6 @@
 import "./login.css";
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import APIService from "../../APIService";
 import kiulogo from "../../images/logosquare.svg";
@@ -19,7 +19,7 @@ export default function Login() {
     ["nametoken"],
     ["profilepictoken"]
   );
-  let history = useHistory();
+  let history = useNavigate();
   useEffect(() => {
     if (token["token"]) {
       // history.push(`/profile/${token["usernametoken"]}`);

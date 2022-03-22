@@ -2,7 +2,7 @@ import "./share.css";
 import { PermMedia, Label, Room, EmojiEmotions } from "@material-ui/icons";
 import { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import tick from "../../images/tick.png";
 import APIService from "../../APIService";
 
@@ -29,7 +29,7 @@ export default function Share(props) {
   const [labelText, setLabelText] = useState(
     "What's on your mind, " + token["nametoken"] + "?"
   );
-  let history = useHistory();
+  let history = useNavigate();
 
   if (!parsedData) {
     setParsedData(true);

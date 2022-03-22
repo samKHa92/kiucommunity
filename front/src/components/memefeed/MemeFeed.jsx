@@ -4,7 +4,7 @@ import "../post/post.css";
 import { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import APIService from "../../APIService";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { setRef } from "@material-ui/core";
 
 export default function MemeFeed() {
@@ -27,7 +27,7 @@ export default function MemeFeed() {
   const [Posts, setPosts] = useState([]);
   // const [refreshed, setRefreshed] = useState(false);
 
-  let history = useHistory();
+  let history = useNavigate();
 
   // if (!refreshed) {
   //   setRefreshed(true);

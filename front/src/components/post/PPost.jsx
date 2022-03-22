@@ -3,7 +3,7 @@ import { MoreVert } from "@material-ui/icons";
 import { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import APIService from "../../APIService";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import likeicon from "../../reacts/like.png";
 import loveicon from "../../reacts/love.png";
 import congratsicon from "../../reacts/congrats.png";
@@ -62,7 +62,7 @@ export default function PPost(props) {
   const [isMine, setIsMine] = useState(userid === token["usernametoken"]);
   const [commentsCollapsed, setCommentsCollapsed] = useState(false);
 
-  let history = useHistory();
+  let history = useNavigate();
 
   function SignInBtnClicked() {
     history.push("/login");

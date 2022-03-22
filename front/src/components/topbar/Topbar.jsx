@@ -1,6 +1,6 @@
 import "./topbar.css";
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Search, Person, Chat, Notifications } from "@material-ui/icons";
 import { useCookies } from "react-cookie";
 import APIService from "../../APIService";
@@ -25,7 +25,7 @@ export default function Topbar() {
     ["nametoken"]
   );
 
-  let history = useHistory();
+  let history = useNavigate();
 
   function SignInBtnClicked() {
     history.push("/login");

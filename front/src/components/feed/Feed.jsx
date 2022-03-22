@@ -4,7 +4,7 @@ import "./feed.css";
 import { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import APIService from "../../APIService";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Feed() {
   const [parsedData, setParsedData] = useState(false);
@@ -25,7 +25,7 @@ export default function Feed() {
   );
   const [Posts, setPosts] = useState([]);
 
-  let history = useHistory();
+  let history = useNavigate();
 
   function SignInBtnClicked() {
     history.push("/login");

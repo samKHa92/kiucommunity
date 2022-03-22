@@ -6,7 +6,7 @@ import Rightbar from "../../components/rightbar/Rightbar";
 import APIService from "../../APIService";
 import React, { useState, useEffect } from "react";
 import coverPH from "../../images/cover.jpg";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function Profile(props) {
   const [isAuth, setIsAuth] = useState(false);
