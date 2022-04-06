@@ -28,15 +28,15 @@ export default function Topbar() {
   let history = useNavigate();
 
   function SignInBtnClicked() {
-    history.push("/login");
+    history("/login");
   }
 
   function routeHome() {
-    history.push("/");
+    history("/");
   }
 
   function routeToProfile() {
-    history.push("/profile/" + username);
+    history("/profile/" + username);
   }
 
   function logoutBtnClicked() {
@@ -44,7 +44,7 @@ export default function Topbar() {
     removeToken(["usernametoken"]);
     removeToken(["nametoken"]);
     removeToken("profilepictoken");
-    history.go(0);
+    history(0);
   }
 
   useEffect(() => {

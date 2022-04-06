@@ -22,13 +22,13 @@ export default function Login() {
   let history = useNavigate();
   useEffect(() => {
     if (token["token"]) {
-      // history.push(`/profile/${token["usernametoken"]}`);
-      history.push("/");
+      // history(`/profile/${token["usernametoken"]}`);
+      history("/");
     }
   }, [token]);
 
   function RegisterBtnClicked() {
-    history.push("/register");
+    history("/register");
   }
 
   const LoginBtnClicked = () => {
@@ -51,7 +51,7 @@ export default function Login() {
         console.log(resp);
         if (resp.token) {
           setToken("mytoken", resp.token);
-          history.push("/");
+          history("/");
         }
       })
       .catch((error) => console.log(error));

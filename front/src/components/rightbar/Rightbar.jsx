@@ -20,7 +20,7 @@ export default function Rightbar({ profile }) {
     // let history = History();
     // function goLink(x) {
     //   if (x === 1)
-    //   history.push("https://www.kiu.edu.ge/index.php?m=205&news_id=163&lng=eng")
+    //   history("https://www.kiu.edu.ge/index.php?m=205&news_id=163&lng=eng")
     // }
     return (
       <>

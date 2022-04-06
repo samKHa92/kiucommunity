@@ -33,11 +33,11 @@ export default function CourseFeed(props) {
 
   // if (!refreshed) {
   //   setRefreshed(true);
-  //   history.go(0);
+  //   history(0);
   // }
 
   function SignInBtnClicked() {
-    history.push("/login");
+    history("/login");
   }
 
   useEffect(() => {

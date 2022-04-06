@@ -49,6 +49,7 @@ export default function Share(props) {
   function checkMemes() {
     setCheckedAll(false);
     setCheckedCourse(false);
+    setCheckedGang(false);
     if (!checkedMemes) setCheckedMemes(true);
 
     setCheckedGang(false);
@@ -89,6 +90,7 @@ export default function Share(props) {
     data.append("user_id", username);
     data.append("reacts", 0);
     data.append("description", postText);
+    console.log(checkedMemes);
     if (checkedAll) {
       data.append("gang", "None");
     }
@@ -112,7 +114,7 @@ export default function Share(props) {
     })
       .then((res) => console.log(res))
       .catch((error) => console.log(error));
-    history.go(0);
+    history(0);
   }
 
   return (

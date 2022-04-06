@@ -65,7 +65,7 @@ export default function Reply(props) {
     })
       .then((res) => console.log(res))
       .catch((error) => console.log(error));
-    history.go(0);
+    history(0);
   }
 
   return (

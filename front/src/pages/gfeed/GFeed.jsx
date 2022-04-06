@@ -6,8 +6,10 @@ import "../home/home.css";
 import { useState, useEffect } from "react";
 import APIService from "../../APIService";
 import { useCookies } from "react-cookie";
+import { useParams } from "react-router-dom";
 
-export default function GFeed(props) {
+export default function GFeed() {
+  const params = useParams();
   const [parsedData, setParsedData] = useState(false);
   const [isAuth, setIsAuth] = useState(false);
   const [username, setUsername] = useState("");
@@ -66,13 +68,13 @@ export default function GFeed(props) {
       })
       .catch((error) => console.log(error));
   }
-  if (props.match.params.indicator === gang) {
+  if (params.indicator === gang) {
     return (
       <>
         <Topbar />
         <div className="homeContainer">
           <Sidebar />
-          <GangFeed indicator={props.match.params.indicator} />
+          <GangFeed indicator={params.indicator} />
           <Rightbar />
         </div>
       </>

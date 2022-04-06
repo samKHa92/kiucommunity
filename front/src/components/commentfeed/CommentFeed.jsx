@@ -29,7 +29,7 @@ export default function CommentFeed(props) {
   let history = useNavigate();
 
   function SignInBtnClicked() {
-    history.push("/login");
+    history("/login");
   }
 
   useEffect(() => {

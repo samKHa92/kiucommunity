@@ -7,8 +7,10 @@ import APIService from "../../APIService";
 import React, { useState, useEffect } from "react";
 import coverPH from "../../images/cover.jpg";
 import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-export default function Profile(props) {
+export default function Profile() {
+  const params = useParams();
   const [isAuth, setIsAuth] = useState(false);
   const [mobile, setMobile] = useState("");
   const [name, setName] = useState("");
@@ -18,10 +20,11 @@ export default function Profile(props) {
   const [profilePicture, setProfilePicture] = useState("");
   const [program, setProgram] = useState("");
   const [course, setCourse] = useState("");
+  const [gang, setGang] = useState("");
   const [bio, setBio] = useState("");
   const [status, setStatus] = useState("");
 
-  APIService.GetUserData(props.match.params.username)
+  APIService.GetUserData(params.username)
     .then((resp) => {
       if (resp.name) {
         setName(resp.name);
@@ -51,6 +54,9 @@ export default function Profile(props) {
       if (resp.status) {
         setStatus(resp.status);
       }
+      if (resp.gang) {
+        setGang(resp.gang);
+      }
 
       if (status === "Student") {
         setBio(program + " Student | Year - " + course);
@@ -72,7 +78,7 @@ export default function Profile(props) {
             </div>
             <div className="profileInfo">
               <h4 className="profileInfoName">
-                {name} {lastname}
+                {name} {lastname} /{gang}/
               </h4>
               <span className="profileInfoDesc">{bio}</span>
             </div>

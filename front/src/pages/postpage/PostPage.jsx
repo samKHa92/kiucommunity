@@ -7,8 +7,10 @@ import Rightbar from "../../components/rightbar/Rightbar";
 import APIService from "../../APIService";
 import CommentFeed from "../../components/commentfeed/CommentFeed";
 import { useCookies } from "react-cookie";
+import { useParams } from "react-router-dom";
 
-export default function PostPage(props) {
+export default function PostPage() {
+  const params = useParams();
   const [visibility, setVisibility] = useState("");
   const [mygang, setgang] = useState("");
   const [mycourse, setcourse] = useState("");
@@ -20,7 +22,7 @@ export default function PostPage(props) {
   );
 
   if (!parsedData) {
-    APIService.GetPostData(props.match.params.id).then((resp) => {
+    APIService.GetPostData(params.id).then((resp) => {
       setVisibility(resp.gang);
     });
     APIService.GetUserData(token["usernametoken"]).then((resp) => {
@@ -39,7 +41,7 @@ export default function PostPage(props) {
         <Topbar />
         <div className="homeContainer">
           <Sidebar />
-          <CommentFeed pid={props.match.params.id} />
+          <CommentFeed pid={params.id} />
           <Rightbar />
         </div>
       </>

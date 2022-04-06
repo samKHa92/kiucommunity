@@ -28,7 +28,7 @@ export default function Feed() {
   let history = useNavigate();
 
   function SignInBtnClicked() {
-    history.push("/login");
+    history("/login");
   }
 
   useEffect(() => {

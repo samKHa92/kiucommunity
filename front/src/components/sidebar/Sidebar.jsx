@@ -60,19 +60,19 @@ export default function Sidebar() {
   let history = useNavigate();
 
   function routeHome() {
-    history.push("/");
+    history("/");
   }
 
   function routeCourseFeed() {
-    history.push("/coursefeed/" + course);
+    history("/coursefeed/" + course);
   }
 
   function routeMemeFeed() {
-    history.push("/memes/");
+    history("/memes/");
   }
 
   function routeGangFeed() {
-    history.push("/gangfeed/" + gang);
+    history("/gangfeed/" + gang);
   }
   return (
     <div className="sidebar">

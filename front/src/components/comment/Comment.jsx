@@ -29,18 +29,18 @@ export default function Comment({ post }) {
   let history = useNavigate();
 
   function SignInBtnClicked() {
-    history.push("/login");
+    history("/login");
   }
 
   function routeToProfile() {
-    history.push("/profile/" + post.user_id);
+    history("/profile/" + post.user_id);
   }
 
   function postDltBtnClicked() {
     APIService.DeleteComment(post.id)
       .then((resp) => resp)
       .catch((error) => console.log(error));
-    history.go(0);
+    history(0);
   }
 
   useEffect(() => {

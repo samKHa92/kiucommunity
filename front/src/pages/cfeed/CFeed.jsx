@@ -6,8 +6,10 @@ import "../home/home.css";
 import { useState, useEffect } from "react";
 import APIService from "../../APIService";
 import { useCookies } from "react-cookie";
+import { useParams } from "react-router-dom";
 
-export default function CFeed(props) {
+export default function CFeed() {
+  const params = useParams();
   const [parsedData, setParsedData] = useState(false);
   const [isAuth, setIsAuth] = useState(false);
   const [username, setUsername] = useState("");
@@ -65,13 +67,13 @@ export default function CFeed(props) {
       })
       .catch((error) => console.log(error));
   }
-  if (props.match.params.indicator === program) {
+  if (params.indicator === program) {
     return (
       <>
         <Topbar />
         <div className="homeContainer">
           <Sidebar />
-          <CourseFeed indicator={props.match.params.indicator} />
+          <CourseFeed indicator={params.indicator} />
           <Rightbar />
         </div>
       </>

@@ -65,11 +65,11 @@ export default function PPost(props) {
   let history = useNavigate();
 
   function SignInBtnClicked() {
-    history.push("/login");
+    history("/login");
   }
 
   function routeToProfile() {
-    history.push("/profile/" + userid);
+    history("/profile/" + userid);
   }
 
   const [likes, setLikes] = useState(0);
@@ -88,7 +88,7 @@ export default function PPost(props) {
     APIService.DeletePost(props.id)
       .then((resp) => resp)
       .catch((error) => console.log(error));
-    history.go(0);
+    history(0);
   }
 
   function likeHandler() {

@@ -82,7 +82,7 @@ export default function Register() {
   };
 
   function LoginBtnClicked() {
-    history.push("/login");
+    history("/login");
   }
 
   // const uploadImage = async (e) => {
@@ -133,7 +133,7 @@ export default function Register() {
           .then((res) => {
             console.log(res);
             if (res.status === 201 || res.status === 200) {
-              history.push("/login");
+              history("/login");
             } else {
               setError(
                 "Registration Failed. Maybe the email or the username is already taken. Or you are missing some fields."

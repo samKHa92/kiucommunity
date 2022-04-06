@@ -12,21 +12,21 @@ import PostPage from "./pages/postpage/PostPage";
 
 function App() {
   return (
-    <div className="App">
-      {/* <Topbar /> */}
-      <Router>
+    <Router>
+      <div className="App">
+        {/* <Topbar /> */}
         <Routes>
-          <Route path="/" exact component={Home} />
-          <Route path="/register" exact component={Register} />
-          <Route path="/login" exact component={Login} />
-          <Route path="/profile/:username" exact component={Profile} />
-          <Route path="/gangfeed/:indicator" exact component={GFeed} />
-          <Route path="/coursefeed/:indicator" exact component={CFeed} />
-          <Route path="/memes/" exact component={MFeed} />
-          <Route path="/post/:id" exact component={PostPage} />
+          <Route path="/" exact element={<Home />} />
+          <Route path="/register" exact element={<Register />} />
+          <Route path="/login" exact element={<Login />} />
+          <Route path="/profile/:username" exact element={<Profile />} />
+          <Route path="/gangfeed/:indicator" exact element={<GFeed />} />
+          <Route path="/coursefeed/:indicator" exact element={<CFeed />} />
+          <Route path="/memes/" exact element={<MFeed />} />
+          <Route path="/post/:id" exact element={<PostPage />} />
         </Routes>
-      </Router>
-    </div>
+      </div>
+    </Router>
   );
 }
 

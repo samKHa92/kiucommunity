@@ -31,11 +31,11 @@ export default function MemeFeed() {
 
   // if (!refreshed) {
   //   setRefreshed(true);
-  //   history.go(0);
+  //   history(0);
   // }
 
   function SignInBtnClicked() {
-    history.push("/login");
+    history("/login");
   }
 
   useEffect(() => {
