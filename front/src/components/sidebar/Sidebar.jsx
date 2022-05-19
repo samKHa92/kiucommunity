@@ -3,17 +3,14 @@ import logo from "../../images/logosquare.svg";
 import {
   RssFeed,
   Chat,
-  PlayCircleFilledOutlined,
   Group,
-  Bookmark,
-  HelpOutline,
-  WorkOutline,
   Event,
   School,
   Mood,
   MenuBook,
   Star,
 } from "@material-ui/icons";
+import LocalLaundryServiceIcon from "@mui/icons-material/LocalLaundryService";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import APIService from "../../APIService";
@@ -74,6 +71,13 @@ export default function Sidebar() {
   function routeGangFeed() {
     history("/gangfeed/" + gang);
   }
+
+  function routeLibrary() {
+    history("/library");
+  }
+  function routeEvents() {
+    history("/events");
+  }
   return (
     <div className="sidebar">
       <div className="sidebarWrapper">
@@ -108,19 +112,19 @@ export default function Sidebar() {
 
           <hr className="sidebarHr" />
 
-          <li className="sidebarListItem">
+          <li className="sidebarListItem" onClick={routeLibrary}>
             <MenuBook className="sidebarIcon" />
             <span className="sidebarListItemText">Library</span>
           </li>
-          <li className="sidebarListItem">
+          <li className="sidebarListItem" onClick={routeEvents}>
             <Event className="sidebarIcon" />
             <span className="sidebarListItemText">Events</span>
           </li>
         </ul>
         <hr className="sidebarHr" />
         <li className="sidebarListItem">
-          <Chat className="sidebarIcon" />
-          <span className="sidebarListItemText">Chats</span>
+          <LocalLaundryServiceIcon className="sidebarIcon" />
+          <span className="sidebarListItemText">Laundry</span>
         </li>
         {/* <ul className="sidebarFriendList">
           {Users.map((u) => (
