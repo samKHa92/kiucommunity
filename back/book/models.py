@@ -7,4 +7,3 @@ class Book(models.Model):
     book_file = models.FileField(upload_to="books", default = "media/defaultprof.png")
     def __str__(self):
         return self.name
-    
